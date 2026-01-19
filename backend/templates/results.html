@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+    <section id="view-result" class="view-section hidden pt-10 pb-20">
+        <div class="max-w-3xl mx-auto bg-white shadow-xl rounded-lg overflow-hidden">
+            <div class="bg-green-600 px-6 py-8 text-center text-white">
+                <h2 class="text-3xl font-bold mb-2">Test Completed!</h2>
+                <p class="opacity-90">Cambridge IELTS 19 - Test 1 (Reading)</p>
+            </div>
+            
+            <div class="p-8">
+                <div class="flex justify-center -mt-16 mb-8">
+                    <div class="bg-white p-2 rounded-full shadow-lg">
+                        <div class="w-24 h-24 rounded-full border-4 border-green-500 flex items-center justify-center flex-col text-green-700">
+                            <span class="text-3xl font-bold">7.5</span>
+                            <span class="text-xs font-bold uppercase">Band</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-3 gap-4 text-center mb-8 divide-x">
+                    <div>
+                        <span class="block text-2xl font-bold text-gray-800">32</span>
+                        <span class="text-sm text-gray-500">Correct</span>
+                    </div>
+                    <div>
+                        <span class="block text-2xl font-bold text-gray-800">8</span>
+                        <span class="text-sm text-gray-500">Incorrect</span>
+                    </div>
+                    <div>
+                        <span class="block text-2xl font-bold text-gray-800">40</span>
+                        <span class="text-sm text-gray-500">Total</span>
+                    </div>
+                </div>
+                <div class="border-t pt-8">
+                    <h3 class="font-bold text-gray-800 mb-4">Answer Key & Explanations</h3>
+                    <div class="space-y-3">
+                        <!-- Review Item Correct -->
+                        <div class="flex items-start p-3 bg-green-50 rounded border border-green-100">
+                            <div class="flex-shrink-0 mt-1">
+                                <i class="fa-solid fa-check-circle text-green-600"></i>
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-sm font-bold text-gray-800">Question 1: B (Emperor Shen Nung)</p>
+                                <p class="text-sm text-gray-600">You answered: <span class="text-green-700 font-medium">B</span></p>
+                            </div>
+                        </div>
+                        
+                        <!-- Review Item Incorrect -->
+                        <div class="flex items-start p-3 bg-red-50 rounded border border-red-100">
+                            <div class="flex-shrink-0 mt-1">
+                                <i class="fa-solid fa-times-circle text-red-600"></i>
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-sm font-bold text-gray-800">Question 2: B (Tang Dynasty)</p>
+                                <p class="text-sm text-gray-600">You answered: <span class="text-red-700 font-medium">A</span>. Correct answer is B.</p>
+                                <p class="text-xs text-gray-500 mt-1">Explanation: Paragraph 2 explicitly mentions the Tang dynasty established tea as the national drink.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-8 flex gap-4">
+                    <button onclick="app.router.navigate('library')" class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-3 rounded transition">Back to Library</button>
+                    <button onclick="app.router.navigate('home')" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded transition">Go Home</button>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,41 @@
+body {
+    font-family: 'Noto Sans', sans-serif;
+}
+
+/* Custom Scrollbar for Test Interface */
+.test-scroll::-webkit-scrollbar {
+    width: 8px;
+}
+
+.test-scroll::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+}
+
+.test-scroll::-webkit-scrollbar-thumb {
+    background: #cbd5e1; 
+    border-radius: 4px;
+}
+
+.test-scroll::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8; 
+}
+
+/* Toggle Active State for Questions */
+.q-btn.active {
+    background-color: #1e40af; /* blue-800 */
+    color: white;
+    border-color: #1e40af;
+}
+
+.q-btn.answered {
+    background-color: #dbeafe; /* blue-100 */
+    color: #1e40af;
+    border-color: #1e40af;
+    font-weight: bold;
+}
+
+/* Selection highlight color mimicking the real test */
+::selection {
+    background: #fef08a; /* yellow-200 */
+    color: black;
+}

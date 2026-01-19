@@ -1,581 +1,99 @@
+{% extends 'base.html' %}
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IELTS Simulation Platform</title>
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <!-- Google Fonts: Noto Sans for academic look -->
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
-
-    <style>
-        body {
-            font-family: 'Noto Sans', sans-serif;
-        }
-
-        /* Custom Scrollbar for Test Interface */
-        .test-scroll::-webkit-scrollbar {
-            width: 8px;
-        }
-        .test-scroll::-webkit-scrollbar-track {
-            background: #f1f1f1; 
-        }
-        .test-scroll::-webkit-scrollbar-thumb {
-            background: #cbd5e1; 
-            border-radius: 4px;
-        }
-        .test-scroll::-webkit-scrollbar-thumb:hover {
-            background: #94a3b8; 
-        }
-
-        /* Toggle Active State for Questions */
-        .q-btn.active {
-            background-color: #1e40af; /* blue-800 */
-            color: white;
-            border-color: #1e40af;
-        }
-        .q-btn.answered {
-            background-color: #dbeafe; /* blue-100 */
-            color: #1e40af;
-            border-color: #1e40af;
-            font-weight: bold;
-        }
-
-        /* Selection highlight color mimicking the real test */
-        ::selection {
-            background: #fef08a; /* yellow-200 */
-            color: black;
-        }
-    </style>
-</head>
-<body class="bg-gray-50 flex flex-col min-h-screen text-slate-800">
-
-    <!-- ================================================================================== -->
-    <!-- DJANGO BLOCK: NAVBAR (Put this in base.html) -->
-    <!-- ================================================================================== -->
-    <nav class="bg-white border-b border-gray-200 sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16">
-                <!-- Logo -->
-                <div class="flex items-center cursor-pointer" onclick="app.router.navigate('home')">
-                    <div class="flex-shrink-0 flex items-center gap-2">
-                        <i class="fa-solid fa-graduation-cap text-3xl text-blue-700"></i>
-                        <div>
-                            <span class="font-bold text-xl tracking-tight text-blue-900">IELTS<span class="text-blue-600">Sim</span></span>
-                            <span class="text-xs block text-gray-500 uppercase tracking-widest">Simulation Platform</span>
+{% block content %}
+    <section id="view-home" class="view-section">
+        <!-- Hero Section -->
+        <div class="relative bg-white overflow-hidden">
+            <div class="max-w-7xl mx-auto">
+                <div class="relative z-10 pb-8 bg-white sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32 pt-20 px-4 sm:px-6 lg:px-8">
+                    <main class="mt-10 mx-auto max-w-7xl sm:mt-12 md:mt-16 lg:mt-20 xl:mt-28">
+                        <div class="sm:text-center lg:text-left">
+                            <h1 class="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
+                                <span class="block xl:inline">Master the IELTS</span>
+                                <span class="block text-blue-600 xl:inline">Computer-delivered</span>
+                            </h1>
+                            <p class="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
+                                Experience the real exam environment before the big day. Unlimited free access to Cambridge 1-19 mock tests with instant band score calculation.
+                            </p>
+                            <div class="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
+                                <div class="rounded-md shadow">
+                                    <button onclick="app.router.navigate('library')" class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-700 hover:bg-blue-800 md:py-4 md:text-lg transition">
+                                        Start Free Test
+                                    </button>
+                                </div>
+                                <div class="mt-3 sm:mt-0 sm:ml-3">
+                                    <a href="#" class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-blue-700 bg-blue-100 hover:bg-blue-200 md:py-4 md:text-lg transition">
+                                        View Analytics
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </main>
+                </div>
+            </div>
+            <!-- Decorative Image -->
+            <div class="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2 bg-gray-50 flex items-center justify-center">
+                <img class="h-56 w-full object-cover sm:h-72 md:h-96 lg:w-full lg:h-full opacity-90" src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Student studying">
+            </div>
+        </div>
+        <!-- Features / Modules Grid -->
+        <div class="py-12 bg-gray-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <p class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+                        Choose Your Module
+                    </p>
+                    <p class="mt-4 max-w-2xl text-xl text-gray-500 mx-auto">
+                        Focus on your weak points or simulate a full test run.
+                    </p>
+                </div>
+                <div class="mt-10">
+                    <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+                        <!-- Card 1: Listening -->
+                        <div class="bg-white overflow-hidden shadow rounded-lg hover:shadow-lg transition duration-300 border-t-4 border-red-500 group cursor-pointer" onclick="app.router.navigate('library')">
+                            <div class="px-4 py-5 sm:p-6 text-center">
+                                <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-red-100 group-hover:bg-red-200 transition">
+                                    <i class="fa-solid fa-headphones text-2xl text-red-600"></i>
+                                </div>
+                                <h3 class="mt-4 text-lg leading-6 font-medium text-gray-900">Listening</h3>
+                                <p class="mt-2 text-sm text-gray-500">40+ Tests available. Audio synchronized with questions.</p>
+                            </div>
+                        </div>
+                        <!-- Card 2: Reading -->
+                        <div class="bg-white overflow-hidden shadow rounded-lg hover:shadow-lg transition duration-300 border-t-4 border-blue-500 group cursor-pointer" onclick="app.router.navigate('library')">
+                            <div class="px-4 py-5 sm:p-6 text-center">
+                                <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-blue-100 group-hover:bg-blue-200 transition">
+                                    <i class="fa-solid fa-book-open text-2xl text-blue-600"></i>
+                                </div>
+                                <h3 class="mt-4 text-lg leading-6 font-medium text-gray-900">Reading</h3>
+                                <p class="mt-2 text-sm text-gray-500">50+ Academic & GT Tests. Split screen interface.</p>
+                            </div>
+                        </div>
+                        <!-- Card 3: Writing -->
+                        <div class="bg-white overflow-hidden shadow rounded-lg hover:shadow-lg transition duration-300 border-t-4 border-yellow-500 group">
+                            <div class="px-4 py-5 sm:p-6 text-center">
+                                <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-yellow-100 group-hover:bg-yellow-200 transition">
+                                    <i class="fa-solid fa-pen-nib text-2xl text-yellow-600"></i>
+                                </div>
+                                <h3 class="mt-4 text-lg leading-6 font-medium text-gray-900">Writing</h3>
+                                <p class="mt-2 text-sm text-gray-500">Task 1 & 2 simulations with word count tools.</p>
+                            </div>
+                        </div>
+                        <!-- Card 4: Speaking -->
+                        <div class="bg-white overflow-hidden shadow rounded-lg hover:shadow-lg transition duration-300 border-t-4 border-green-500 group">
+                            <div class="px-4 py-5 sm:p-6 text-center">
+                                <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-green-100 group-hover:bg-green-200 transition">
+                                    <i class="fa-solid fa-microphone text-2xl text-green-600"></i>
+                                </div>
+                                <h3 class="mt-4 text-lg leading-6 font-medium text-gray-900">Speaking</h3>
+                                <p class="mt-2 text-sm text-gray-500">Cue cards and AI-assisted recording playback.</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-
-                <!-- Desktop Menu -->
-                <div class="hidden md:flex items-center space-x-8">
-                    <a href="#" onclick="app.router.navigate('home')" class="text-gray-600 hover:text-blue-700 font-medium transition">Home</a>
-                    <a href="#" onclick="app.router.navigate('library')" class="text-gray-600 hover:text-blue-700 font-medium transition">IELTS Library</a>
-                    
-                    <!-- Dropdown Trigger (Mock) -->
-                    <div class="relative group">
-                        <button class="text-gray-600 hover:text-blue-700 font-medium flex items-center gap-1">
-                            Tips & Tricks <i class="fa-solid fa-chevron-down text-xs"></i>
-                        </button>
-                    </div>
-
-                    <a href="#" class="text-blue-600 font-semibold hover:text-blue-800">Premium</a>
-                </div>
-
-                <!-- Auth Buttons -->
-                <div class="hidden md:flex items-center space-x-4">
-                    <button class="text-gray-600 hover:text-gray-900 font-medium">Log In</button>
-                    <button class="bg-blue-700 hover:bg-blue-800 text-white px-5 py-2 rounded-full font-medium transition shadow-sm">Sign Up Free</button>
-                </div>
-
-                <!-- Mobile Menu Button -->
-                <div class="flex items-center md:hidden">
-                    <button class="text-gray-500 hover:text-gray-700 focus:outline-none">
-                        <i class="fa-solid fa-bars text-2xl"></i>
-                    </button>
                 </div>
             </div>
         </div>
-    </nav>
-    <!-- ================================================================================== -->
-    <!-- END DJANGO BLOCK: NAVBAR -->
-    <!-- ================================================================================== -->
+    </section>
 
-
-    <!-- ================================================================================== -->
-    <!-- MAIN CONTENT AREA (The contents of these sections will go into specific templates) -->
-    <!-- ================================================================================== -->
-    <main id="main-container" class="flex-grow">
-        
-        <!-- 
-            VIEW 1: LANDING PAGE 
-            (Django Template: index.html)
-        -->
-        <section id="view-home" class="view-section">
-            <!-- Hero Section -->
-            <div class="relative bg-white overflow-hidden">
-                <div class="max-w-7xl mx-auto">
-                    <div class="relative z-10 pb-8 bg-white sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32 pt-20 px-4 sm:px-6 lg:px-8">
-                        <main class="mt-10 mx-auto max-w-7xl sm:mt-12 md:mt-16 lg:mt-20 xl:mt-28">
-                            <div class="sm:text-center lg:text-left">
-                                <h1 class="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
-                                    <span class="block xl:inline">Master the IELTS</span>
-                                    <span class="block text-blue-600 xl:inline">Computer-delivered</span>
-                                </h1>
-                                <p class="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
-                                    Experience the real exam environment before the big day. Unlimited free access to Cambridge 1-19 mock tests with instant band score calculation.
-                                </p>
-                                <div class="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
-                                    <div class="rounded-md shadow">
-                                        <button onclick="app.router.navigate('library')" class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-700 hover:bg-blue-800 md:py-4 md:text-lg transition">
-                                            Start Free Test
-                                        </button>
-                                    </div>
-                                    <div class="mt-3 sm:mt-0 sm:ml-3">
-                                        <a href="#" class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-blue-700 bg-blue-100 hover:bg-blue-200 md:py-4 md:text-lg transition">
-                                            View Analytics
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </main>
-                    </div>
-                </div>
-                <!-- Decorative Image -->
-                <div class="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2 bg-gray-50 flex items-center justify-center">
-                    <img class="h-56 w-full object-cover sm:h-72 md:h-96 lg:w-full lg:h-full opacity-90" src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Student studying">
-                </div>
-            </div>
-
-            <!-- Features / Modules Grid -->
-            <div class="py-12 bg-gray-50">
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div class="text-center">
-                        <p class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
-                            Choose Your Module
-                        </p>
-                        <p class="mt-4 max-w-2xl text-xl text-gray-500 mx-auto">
-                            Focus on your weak points or simulate a full test run.
-                        </p>
-                    </div>
-
-                    <div class="mt-10">
-                        <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
-                            <!-- Card 1: Listening -->
-                            <div class="bg-white overflow-hidden shadow rounded-lg hover:shadow-lg transition duration-300 border-t-4 border-red-500 group cursor-pointer" onclick="app.router.navigate('library')">
-                                <div class="px-4 py-5 sm:p-6 text-center">
-                                    <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-red-100 group-hover:bg-red-200 transition">
-                                        <i class="fa-solid fa-headphones text-2xl text-red-600"></i>
-                                    </div>
-                                    <h3 class="mt-4 text-lg leading-6 font-medium text-gray-900">Listening</h3>
-                                    <p class="mt-2 text-sm text-gray-500">40+ Tests available. Audio synchronized with questions.</p>
-                                </div>
-                            </div>
-
-                            <!-- Card 2: Reading -->
-                            <div class="bg-white overflow-hidden shadow rounded-lg hover:shadow-lg transition duration-300 border-t-4 border-blue-500 group cursor-pointer" onclick="app.router.navigate('library')">
-                                <div class="px-4 py-5 sm:p-6 text-center">
-                                    <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-blue-100 group-hover:bg-blue-200 transition">
-                                        <i class="fa-solid fa-book-open text-2xl text-blue-600"></i>
-                                    </div>
-                                    <h3 class="mt-4 text-lg leading-6 font-medium text-gray-900">Reading</h3>
-                                    <p class="mt-2 text-sm text-gray-500">50+ Academic & GT Tests. Split screen interface.</p>
-                                </div>
-                            </div>
-
-                            <!-- Card 3: Writing -->
-                            <div class="bg-white overflow-hidden shadow rounded-lg hover:shadow-lg transition duration-300 border-t-4 border-yellow-500 group">
-                                <div class="px-4 py-5 sm:p-6 text-center">
-                                    <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-yellow-100 group-hover:bg-yellow-200 transition">
-                                        <i class="fa-solid fa-pen-nib text-2xl text-yellow-600"></i>
-                                    </div>
-                                    <h3 class="mt-4 text-lg leading-6 font-medium text-gray-900">Writing</h3>
-                                    <p class="mt-2 text-sm text-gray-500">Task 1 & 2 simulations with word count tools.</p>
-                                </div>
-                            </div>
-
-                            <!-- Card 4: Speaking -->
-                            <div class="bg-white overflow-hidden shadow rounded-lg hover:shadow-lg transition duration-300 border-t-4 border-green-500 group">
-                                <div class="px-4 py-5 sm:p-6 text-center">
-                                    <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-green-100 group-hover:bg-green-200 transition">
-                                        <i class="fa-solid fa-microphone text-2xl text-green-600"></i>
-                                    </div>
-                                    <h3 class="mt-4 text-lg leading-6 font-medium text-gray-900">Speaking</h3>
-                                    <p class="mt-2 text-sm text-gray-500">Cue cards and AI-assisted recording playback.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-
-        <!-- 
-            VIEW 2: TEST LIBRARY / LIST VIEW 
-            (Django Template: test_list.html)
-        -->
-        <section id="view-library" class="view-section hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-            <!-- Filter Bar -->
-            <div class="bg-white p-4 rounded-lg shadow mb-8 flex flex-col md:flex-row justify-between items-center gap-4">
-                <h2 class="text-2xl font-bold text-gray-800">Reading Tests Library</h2>
-                <div class="flex gap-2">
-                    <select class="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md border">
-                        <option>All Types</option>
-                        <option>Academic</option>
-                        <option>General Training</option>
-                    </select>
-                    <input type="text" placeholder="Search test..." class="border border-gray-300 rounded-md px-4 py-2 text-sm focus:ring-blue-500 focus:border-blue-500">
-                </div>
-            </div>
-
-            <!-- Test Grid -->
-            <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                <!-- Test Item 1 -->
-                <div class="bg-white rounded-lg shadow border border-gray-100 hover:shadow-md transition">
-                    <div class="p-6">
-                        <div class="flex items-center justify-between mb-4">
-                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                                Academic
-                            </span>
-                            <span class="text-gray-400 text-sm"><i class="fa-regular fa-clock"></i> 60m</span>
-                        </div>
-                        <h3 class="text-lg font-bold text-gray-900">Cambridge IELTS 19 - Test 1</h3>
-                        <div class="mt-4 flex items-center justify-between text-sm text-gray-500">
-                            <span><i class="fa-solid fa-user-pen mr-1"></i> 1,203 taken</span>
-                            <span class="text-yellow-500"><i class="fa-solid fa-star"></i> 4.8</span>
-                        </div>
-                        <button onclick="app.router.navigate('exam')" class="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded transition">
-                            Take Test
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Test Item 2 -->
-                <div class="bg-white rounded-lg shadow border border-gray-100 hover:shadow-md transition">
-                    <div class="p-6">
-                        <div class="flex items-center justify-between mb-4">
-                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                                Academic
-                            </span>
-                            <span class="text-gray-400 text-sm"><i class="fa-regular fa-clock"></i> 60m</span>
-                        </div>
-                        <h3 class="text-lg font-bold text-gray-900">Cambridge IELTS 19 - Test 2</h3>
-                        <div class="mt-4 flex items-center justify-between text-sm text-gray-500">
-                            <span><i class="fa-solid fa-user-pen mr-1"></i> 854 taken</span>
-                            <span class="text-yellow-500"><i class="fa-solid fa-star"></i> 4.7</span>
-                        </div>
-                        <button onclick="app.router.navigate('exam')" class="mt-6 w-full bg-white border border-blue-600 text-blue-600 hover:bg-blue-50 font-semibold py-2 px-4 rounded transition">
-                            Take Test
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Test Item 3 -->
-                <div class="bg-white rounded-lg shadow border border-gray-100 hover:shadow-md transition">
-                    <div class="p-6">
-                        <div class="flex items-center justify-between mb-4">
-                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                General
-                            </span>
-                            <span class="text-gray-400 text-sm"><i class="fa-regular fa-clock"></i> 60m</span>
-                        </div>
-                        <h3 class="text-lg font-bold text-gray-900">Cambridge IELTS 18 - GT Test 1</h3>
-                        <div class="mt-4 flex items-center justify-between text-sm text-gray-500">
-                            <span><i class="fa-solid fa-user-pen mr-1"></i> 3,420 taken</span>
-                            <span class="text-yellow-500"><i class="fa-solid fa-star"></i> 4.9</span>
-                        </div>
-                        <button onclick="app.router.navigate('exam')" class="mt-6 w-full bg-white border border-blue-600 text-blue-600 hover:bg-blue-50 font-semibold py-2 px-4 rounded transition">
-                            Take Test
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-
-        <!-- 
-            VIEW 3: EXAM INTERFACE 
-            (Django Template: take_test.html)
-            This is structured to mimic the exact British Council/IDP computer test interface.
-        -->
-        <section id="view-exam" class="view-section hidden flex flex-col h-[calc(100vh-64px)] bg-gray-100 fixed w-full top-16 left-0 z-40">
-            <!-- Exam Header -->
-            <div class="bg-white border-b border-gray-300 px-6 py-2 flex justify-between items-center shadow-sm h-14 flex-shrink-0">
-                <div class="flex items-center gap-4">
-                    <span class="text-sm text-gray-500 font-mono">Candidate: <strong>John Doe</strong></span>
-                    <span class="text-sm text-gray-500 font-mono">ID: <strong>123456</strong></span>
-                </div>
-                
-                <div class="flex items-center gap-6">
-                    <div class="flex items-center gap-2">
-                        <i class="fa-regular fa-clock text-gray-600"></i>
-                        <span id="exam-timer" class="text-xl font-bold text-gray-800 font-mono">59:59</span>
-                    </div>
-                    <button class="text-xs text-blue-600 underline">Hide Time</button>
-                    <button class="bg-red-600 hover:bg-red-700 text-white text-xs px-3 py-1 rounded font-bold uppercase tracking-wider" onclick="app.testEngine.finishTest()">Submit Test</button>
-                </div>
-            </div>
-
-            <!-- Exam Content: Split Screen -->
-            <div class="flex flex-grow overflow-hidden relative">
-                
-                <!-- Left Panel: Passage (Scrollable) -->
-                <div class="w-1/2 p-8 overflow-y-auto test-scroll border-r border-gray-300 bg-white">
-                    <h2 class="text-2xl font-bold mb-4 text-gray-800">The History of Tea</h2>
-                    <p class="mb-4 leading-relaxed text-gray-700">
-                        The story of tea begins in China. According to legend, in 2737 BC, the Chinese emperor Shen Nung was sitting beneath a tree while his servant boiled drinking water, when some leaves from the tree blew into the water. Shen Nung, a renowned herbalist, decided to try the infusion that his servant had accidentally created. The tree was a Camellia sinensis, and the resulting drink was what we now call tea.
-                    </p>
-                    <p class="mb-4 leading-relaxed text-gray-700">
-                        Tea containers have been found in tombs dating from the Han dynasty (206 BC – 220 AD) but it was under the Tang dynasty (618–906 AD), that tea became firmly established as the national drink of China. It became such a favourite that during the late eighth century a writer called Lu Yu wrote the first book entirely about tea, the Ch'a Ching, or Tea Classic. It was shortly after this that tea was first introduced to Japan, by Japanese Buddhist monks who had travelled to China to study.
-                    </p>
-                    <p class="mb-4 leading-relaxed text-gray-700">
-                        <strong>Tea in Europe</strong><br>
-                        Tea was totally unknown to Europeans until the sixteenth century. It is likely that the Portuguese, who were the first Europeans to establish trade with China, were also the first to drink tea. However, it was the Dutch who were the first to import tea commercially, with the first consignment arriving in Holland around 1610. 
-                    </p>
-                    <p class="mb-4 leading-relaxed text-gray-700">
-                        In Britain, the marriage of Charles II to Catherine of Braganza proved to be a turning point. She was a Portuguese princess and a tea addict, and her love of the drink made it fashionable at court and in wealthy circles. In this period, the East India Company began to import tea into Britain, its first order being placed in 1664 for 100lbs of China tea to be shipped from Java.
-                    </p>
-                    <!-- Placeholder for length -->
-                    <div class="h-32"></div>
-                </div>
-
-                <!-- Right Panel: Questions (Scrollable) -->
-                <div class="w-1/2 p-8 overflow-y-auto test-scroll bg-gray-50">
-                    
-                    <!-- Question Group 1 -->
-                    <div class="mb-8">
-                        <div class="bg-blue-50 border-l-4 border-blue-600 p-4 mb-4">
-                            <h3 class="font-bold text-blue-800">Questions 1-3</h3>
-                            <p class="text-sm text-blue-700">Choose the correct letter, A, B, C or D.</p>
-                        </div>
-
-                        <!-- Question 1 -->
-                        <div class="mb-6" id="q-container-1">
-                            <p class="font-medium mb-2 text-gray-800"><span class="inline-block w-6 h-6 bg-gray-800 text-white text-center rounded text-sm mr-2 leading-6">1</span> According to legend, who discovered tea?</p>
-                            <div class="space-y-2 ml-8">
-                                <label class="flex items-center space-x-3 cursor-pointer p-2 hover:bg-white rounded border border-transparent hover:border-gray-200 transition">
-                                    <input type="radio" name="q1" value="A" class="h-4 w-4 text-blue-600 focus:ring-blue-500" onchange="app.testEngine.markAnswered(1)">
-                                    <span class="text-gray-700">A servant of the Emperor</span>
-                                </label>
-                                <label class="flex items-center space-x-3 cursor-pointer p-2 hover:bg-white rounded border border-transparent hover:border-gray-200 transition">
-                                    <input type="radio" name="q1" value="B" class="h-4 w-4 text-blue-600 focus:ring-blue-500" onchange="app.testEngine.markAnswered(1)">
-                                    <span class="text-gray-700">Emperor Shen Nung</span>
-                                </label>
-                                <label class="flex items-center space-x-3 cursor-pointer p-2 hover:bg-white rounded border border-transparent hover:border-gray-200 transition">
-                                    <input type="radio" name="q1" value="C" class="h-4 w-4 text-blue-600 focus:ring-blue-500" onchange="app.testEngine.markAnswered(1)">
-                                    <span class="text-gray-700">Lu Yu</span>
-                                </label>
-                            </div>
-                        </div>
-
-                        <!-- Question 2 -->
-                        <div class="mb-6" id="q-container-2">
-                            <p class="font-medium mb-2 text-gray-800"><span class="inline-block w-6 h-6 bg-gray-800 text-white text-center rounded text-sm mr-2 leading-6">2</span> When did tea become the national drink of China?</p>
-                            <div class="space-y-2 ml-8">
-                                <label class="flex items-center space-x-3 cursor-pointer p-2 hover:bg-white rounded border border-transparent hover:border-gray-200 transition">
-                                    <input type="radio" name="q2" value="A" class="h-4 w-4 text-blue-600 focus:ring-blue-500" onchange="app.testEngine.markAnswered(2)">
-                                    <span class="text-gray-700">Han Dynasty</span>
-                                </label>
-                                <label class="flex items-center space-x-3 cursor-pointer p-2 hover:bg-white rounded border border-transparent hover:border-gray-200 transition">
-                                    <input type="radio" name="q2" value="B" class="h-4 w-4 text-blue-600 focus:ring-blue-500" onchange="app.testEngine.markAnswered(2)">
-                                    <span class="text-gray-700">Tang Dynasty</span>
-                                </label>
-                                <label class="flex items-center space-x-3 cursor-pointer p-2 hover:bg-white rounded border border-transparent hover:border-gray-200 transition">
-                                    <input type="radio" name="q2" value="C" class="h-4 w-4 text-blue-600 focus:ring-blue-500" onchange="app.testEngine.markAnswered(2)">
-                                    <span class="text-gray-700">In 2737 BC</span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Question Group 2 -->
-                    <div class="mb-8">
-                        <div class="bg-blue-50 border-l-4 border-blue-600 p-4 mb-4">
-                            <h3 class="font-bold text-blue-800">Questions 4-6</h3>
-                            <p class="text-sm text-blue-700">Complete the sentences below. Write <strong>NO MORE THAN TWO WORDS</strong> for each answer.</p>
-                        </div>
-
-                        <!-- Question 4 -->
-                        <div class="mb-4" id="q-container-4">
-                            <div class="flex items-baseline gap-3">
-                                <span class="inline-block w-6 h-6 bg-gray-800 text-white text-center rounded text-sm leading-6 flex-shrink-0">4</span>
-                                <p class="text-gray-800 leading-7">
-                                    The first Europeans to establish trade with China were the 
-                                    <input type="text" class="border-b-2 border-gray-400 bg-gray-100 px-2 py-0 focus:outline-none focus:border-blue-600 focus:bg-white w-40 text-blue-700 font-semibold" oninput="app.testEngine.markAnswered(4)">.
-                                </p>
-                            </div>
-                        </div>
-
-                        <!-- Question 5 -->
-                        <div class="mb-4" id="q-container-5">
-                            <div class="flex items-baseline gap-3">
-                                <span class="inline-block w-6 h-6 bg-gray-800 text-white text-center rounded text-sm leading-6 flex-shrink-0">5</span>
-                                <p class="text-gray-800 leading-7">
-                                    Catherine of Braganza was a Portuguese princess and a known 
-                                    <input type="text" class="border-b-2 border-gray-400 bg-gray-100 px-2 py-0 focus:outline-none focus:border-blue-600 focus:bg-white w-40 text-blue-700 font-semibold" oninput="app.testEngine.markAnswered(5)">.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                     <!-- Placeholder for scroll -->
-                     <div class="h-20"></div>
-                </div>
-            </div>
-
-            <!-- Exam Footer: Question Palette -->
-            <div class="bg-gray-800 h-16 flex-shrink-0 flex items-center justify-between px-4 text-white">
-                <div class="flex items-center gap-2 overflow-x-auto w-full max-w-4xl scrollbar-hide">
-                    <span class="text-xs uppercase font-semibold text-gray-400 mr-2">Questions:</span>
-                    <!-- JS will generate buttons here, showing manual example -->
-                    <button class="q-btn w-8 h-8 rounded border border-gray-500 text-sm hover:bg-gray-700 flex items-center justify-center transition" onclick="app.testEngine.scrollToQuestion(1)" id="nav-btn-1">1</button>
-                    <button class="q-btn w-8 h-8 rounded border border-gray-500 text-sm hover:bg-gray-700 flex items-center justify-center transition" onclick="app.testEngine.scrollToQuestion(2)" id="nav-btn-2">2</button>
-                    <button class="q-btn w-8 h-8 rounded border border-gray-500 text-sm hover:bg-gray-700 flex items-center justify-center transition" onclick="app.testEngine.scrollToQuestion(3)" id="nav-btn-3">3</button>
-                    <button class="q-btn w-8 h-8 rounded border border-gray-500 text-sm hover:bg-gray-700 flex items-center justify-center transition" onclick="app.testEngine.scrollToQuestion(4)" id="nav-btn-4">4</button>
-                    <button class="q-btn w-8 h-8 rounded border border-gray-500 text-sm hover:bg-gray-700 flex items-center justify-center transition" onclick="app.testEngine.scrollToQuestion(5)" id="nav-btn-5">5</button>
-                </div>
-                
-                <div class="flex items-center gap-2 flex-shrink-0">
-                     <button class="text-gray-300 hover:text-white px-3"><i class="fa-solid fa-chevron-left"></i></button>
-                     <button class="text-gray-300 hover:text-white px-3"><i class="fa-solid fa-chevron-right"></i></button>
-                </div>
-            </div>
-        </section>
-
-
-        <!-- 
-            VIEW 4: RESULTS 
-            (Django Template: results.html)
-        -->
-        <section id="view-result" class="view-section hidden pt-10 pb-20">
-            <div class="max-w-3xl mx-auto bg-white shadow-xl rounded-lg overflow-hidden">
-                <div class="bg-green-600 px-6 py-8 text-center text-white">
-                    <h2 class="text-3xl font-bold mb-2">Test Completed!</h2>
-                    <p class="opacity-90">Cambridge IELTS 19 - Test 1 (Reading)</p>
-                </div>
-                
-                <div class="p-8">
-                    <div class="flex justify-center -mt-16 mb-8">
-                        <div class="bg-white p-2 rounded-full shadow-lg">
-                            <div class="w-24 h-24 rounded-full border-4 border-green-500 flex items-center justify-center flex-col text-green-700">
-                                <span class="text-3xl font-bold">7.5</span>
-                                <span class="text-xs font-bold uppercase">Band</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-3 gap-4 text-center mb-8 divide-x">
-                        <div>
-                            <span class="block text-2xl font-bold text-gray-800">32</span>
-                            <span class="text-sm text-gray-500">Correct</span>
-                        </div>
-                        <div>
-                            <span class="block text-2xl font-bold text-gray-800">8</span>
-                            <span class="text-sm text-gray-500">Incorrect</span>
-                        </div>
-                        <div>
-                            <span class="block text-2xl font-bold text-gray-800">40</span>
-                            <span class="text-sm text-gray-500">Total</span>
-                        </div>
-                    </div>
-
-                    <div class="border-t pt-8">
-                        <h3 class="font-bold text-gray-800 mb-4">Answer Key & Explanations</h3>
-                        <div class="space-y-3">
-                            <!-- Review Item Correct -->
-                            <div class="flex items-start p-3 bg-green-50 rounded border border-green-100">
-                                <div class="flex-shrink-0 mt-1">
-                                    <i class="fa-solid fa-check-circle text-green-600"></i>
-                                </div>
-                                <div class="ml-3">
-                                    <p class="text-sm font-bold text-gray-800">Question 1: B (Emperor Shen Nung)</p>
-                                    <p class="text-sm text-gray-600">You answered: <span class="text-green-700 font-medium">B</span></p>
-                                </div>
-                            </div>
-                            
-                            <!-- Review Item Incorrect -->
-                            <div class="flex items-start p-3 bg-red-50 rounded border border-red-100">
-                                <div class="flex-shrink-0 mt-1">
-                                    <i class="fa-solid fa-times-circle text-red-600"></i>
-                                </div>
-                                <div class="ml-3">
-                                    <p class="text-sm font-bold text-gray-800">Question 2: B (Tang Dynasty)</p>
-                                    <p class="text-sm text-gray-600">You answered: <span class="text-red-700 font-medium">A</span>. Correct answer is B.</p>
-                                    <p class="text-xs text-gray-500 mt-1">Explanation: Paragraph 2 explicitly mentions the Tang dynasty established tea as the national drink.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="mt-8 flex gap-4">
-                        <button onclick="app.router.navigate('library')" class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-3 rounded transition">Back to Library</button>
-                        <button onclick="app.router.navigate('home')" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded transition">Go Home</button>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-    </main>
-
-    <!-- ================================================================================== -->
-    <!-- DJANGO BLOCK: FOOTER (Put this in base.html) -->
-    <!-- ================================================================================== -->
-    <footer class="bg-white border-t border-gray-200 mt-auto">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div class="col-span-1 md:col-span-1">
-                    <div class="flex items-center gap-2 mb-4">
-                        <i class="fa-solid fa-graduation-cap text-2xl text-blue-700"></i>
-                        <span class="font-bold text-lg text-blue-900">IELTSSim</span>
-                    </div>
-                    <p class="text-gray-500 text-sm">
-                        Free IELTS simulation tests for Academic and General Training modules. Prepare with confidence.
-                    </p>
-                </div>
-                <div>
-                    <h3 class="text-sm font-semibold text-gray-400 tracking-wider uppercase mb-4">Practice</h3>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-500 hover:text-blue-600">Reading Tests</a></li>
-                        <li><a href="#" class="text-gray-500 hover:text-blue-600">Listening Tests</a></li>
-                        <li><a href="#" class="text-gray-500 hover:text-blue-600">Writing Tasks</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="text-sm font-semibold text-gray-400 tracking-wider uppercase mb-4">Resources</h3>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-500 hover:text-blue-600">Band Score Calculator</a></li>
-                        <li><a href="#" class="text-gray-500 hover:text-blue-600">Vocabulary Lists</a></li>
-                        <li><a href="#" class="text-gray-500 hover:text-blue-600">Tips & Strategies</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="text-sm font-semibold text-gray-400 tracking-wider uppercase mb-4">Legal</h3>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-500 hover:text-blue-600">Privacy Policy</a></li>
-                        <li><a href="#" class="text-gray-500 hover:text-blue-600">Terms of Service</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="mt-8 border-t border-gray-200 pt-8 text-center">
-                <p class="text-gray-400 text-sm">&copy; 2024 IELTS Simulation Platform. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
-    <!-- ================================================================================== -->
-    <!-- END DJANGO BLOCK: FOOTER -->
-    <!-- ================================================================================== -->
-
-    <!-- JAVASCRIPT APP LOGIC -->
-    <script src="{% static 'js/main.js' %}"></script>
-    
-    
-</body>
-</html>
+{% endblock %}
