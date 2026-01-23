@@ -1,428 +1,806 @@
-{% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
-
-  <head>
-
+<head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-
-    <title>Space Dynamic - SEO HTML5 Template</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
-
-    <!-- Additional CSS Files -->
-    <link rel="stylesheet" href="{% static 'assets/css/fontawesome.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/css/templatemo-space-dynamic.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/css/animated.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/css/owl.css' %}">
-<!--
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IELTS Prep - Django Template</title>
     
-TemplateMo 562 Space Dynamic
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-https://templatemo.com/tm-562-space-dynamic
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
--->
-  </head>
+    <style>
+        body { font-family: 'Noto Sans', sans-serif; }
+        
+        /* Custom Scrollbar for Test Interface */
+        .test-scroll::-webkit-scrollbar { width: 8px; }
+        .test-scroll::-webkit-scrollbar-track { background: #f1f1f1; }
+        .test-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        .test-scroll::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
 
-<body>
+        /* Dropdown Animation */
+        .group:hover .group-hover\:block { display: block; animation: fadeIn 0.2s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-  <!-- ***** Preloader Start ***** -->
-  <div id="js-preloader" class="js-preloader">
-    <div class="preloader-inner">
-      <span class="dot"></span>
-      <div class="dots">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
+        /* Exam States */
+        .q-btn.active { background-color: #1d4ed8; color: white; border-color: #1d4ed8; }
+        .q-btn.answered { background-color: #dbeafe; color: #1e40af; border-color: #1e40af; font-weight: bold; }
+        .q-btn.flagged { border-color: #f59e0b; color: #f59e0b; position: relative; }
+        .q-btn.flagged::after { content: ''; position: absolute; top: 2px; right: 2px; width: 6px; height: 6px; background: #f59e0b; border-radius: 50%; }
+
+        /* Progress Circle (CSS only) */
+        .progress-circle {
+            width: 100px; height: 100px; border-radius: 50%;
+            background: radial-gradient(closest-side, white 79%, transparent 80% 100%),
+            conic-gradient(#3b82f6 75%, #e5e7eb 0);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 flex flex-col min-h-screen text-slate-800">
+
+    <!-- ================================================================================== -->
+    <!-- DJANGO TEMPLATE: base.html (NAVBAR) -->
+    <!-- ================================================================================== -->
+    <nav class="bg-white border-b border-gray-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <!-- Logo -->
+                <div class="flex items-center cursor-pointer" onclick="app.router.navigate('home')">
+                    <i class="fa-solid fa-layer-group text-3xl text-blue-700 mr-2"></i>
+                    <div>
+                        <span class="font-bold text-xl text-blue-900">IELTS<span class="text-blue-600">Pro</span></span>
+                    </div>
+                </div>
+
+                <!-- Desktop Menu with Dropdowns -->
+                <div class="hidden md:flex items-center space-x-1">
+                    
+                    <!-- Listening Dropdown -->
+                    <div class="relative group h-full flex items-center px-3">
+                        <button class="text-gray-600 group-hover:text-blue-700 font-medium flex items-center gap-1 h-full">
+                            Listening <i class="fa-solid fa-chevron-down text-[10px] opacity-50"></i>
+                        </button>
+                        <div class="hidden group-hover:block absolute top-16 left-0 w-56 bg-white shadow-lg rounded-b-lg border-t-2 border-blue-600 py-2">
+                            <a href="#" onclick="app.router.navigate('list', 'listening')" class="block px-4 py-2 hover:bg-blue-50 text-sm text-gray-700">Mock Tests (Vol 1-19)</a>
+                            <a href="#" class="block px-4 py-2 hover:bg-blue-50 text-sm text-gray-700">Sectional Practice</a>
+                            <a href="#" class="block px-4 py-2 hover:bg-blue-50 text-sm text-gray-700">Tips & Tricks</a>
+                        </div>
+                    </div>
+
+                    <!-- Reading Dropdown -->
+                    <div class="relative group h-full flex items-center px-3">
+                        <button class="text-gray-600 group-hover:text-blue-700 font-medium flex items-center gap-1 h-full">
+                            Reading <i class="fa-solid fa-chevron-down text-[10px] opacity-50"></i>
+                        </button>
+                        <div class="hidden group-hover:block absolute top-16 left-0 w-56 bg-white shadow-lg rounded-b-lg border-t-2 border-blue-600 py-2">
+                            <a href="#" onclick="app.router.navigate('list', 'reading')" class="block px-4 py-2 hover:bg-blue-50 text-sm text-gray-700">Academic Tests</a>
+                            <a href="#" onclick="app.router.navigate('list', 'reading')" class="block px-4 py-2 hover:bg-blue-50 text-sm text-gray-700">General Training Tests</a>
+                            <div class="border-t my-1"></div>
+                            <a href="#" class="block px-4 py-2 hover:bg-blue-50 text-sm text-gray-700">Vocabulary List</a>
+                        </div>
+                    </div>
+
+                    <!-- Writing Dropdown -->
+                    <div class="relative group h-full flex items-center px-3">
+                        <button class="text-gray-600 group-hover:text-blue-700 font-medium flex items-center gap-1 h-full">
+                            Writing <i class="fa-solid fa-chevron-down text-[10px] opacity-50"></i>
+                        </button>
+                        <div class="hidden group-hover:block absolute top-16 left-0 w-56 bg-white shadow-lg rounded-b-lg border-t-2 border-blue-600 py-2">
+                            <a href="#" onclick="app.router.navigate('list', 'writing')" class="block px-4 py-2 hover:bg-blue-50 text-sm text-gray-700">Task 1 (Academic)</a>
+                            <a href="#" onclick="app.router.navigate('list', 'writing')" class="block px-4 py-2 hover:bg-blue-50 text-sm text-gray-700">Task 2 (Essay)</a>
+                            <a href="#" class="block px-4 py-2 hover:bg-blue-50 text-sm text-gray-700">Evaluation Service</a>
+                        </div>
+                    </div>
+
+                    <!-- Speaking Dropdown -->
+                    <div class="relative group h-full flex items-center px-3">
+                        <button class="text-gray-600 group-hover:text-blue-700 font-medium flex items-center gap-1 h-full">
+                            Speaking <i class="fa-solid fa-chevron-down text-[10px] opacity-50"></i>
+                        </button>
+                        <div class="hidden group-hover:block absolute top-16 left-0 w-56 bg-white shadow-lg rounded-b-lg border-t-2 border-blue-600 py-2">
+                            <a href="#" onclick="app.router.navigate('list', 'speaking')" class="block px-4 py-2 hover:bg-blue-50 text-sm text-gray-700">Full Mock Tests</a>
+                            <a href="#" class="block px-4 py-2 hover:bg-blue-50 text-sm text-gray-700">Cue Card Topics 2024</a>
+                            <a href="#" class="block px-4 py-2 hover:bg-blue-50 text-sm text-gray-700">Partner Finder</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Side User Menu -->
+                <div class="hidden md:flex items-center space-x-4">
+                    <!-- If NOT logged in -->
+                    <div id="auth-guest" class="hidden">
+                        <button class="text-gray-600 hover:text-gray-900 font-medium px-3" onclick="app.modal.open('login')">Log In</button>
+                        <button class="bg-blue-700 hover:bg-blue-800 text-white px-5 py-2 rounded-full font-medium transition shadow-sm">Get Started</button>
+                    </div>
+
+                    <!-- If Logged in -->
+                    <div id="auth-user" class="flex items-center gap-3">
+                        <div class="text-right hidden lg:block">
+                            <div class="text-sm font-bold text-gray-800">John Doe</div>
+                            <div class="text-xs text-gray-500">Free Plan</div>
+                        </div>
+                        <button onclick="app.router.navigate('profile')" class="h-10 w-10 rounded-full bg-blue-100 text-blue-700 font-bold flex items-center justify-center hover:bg-blue-200 transition">
+                            JD
+                        </button>
+                    </div>
+                </div>
+                
+                 <!-- Mobile Menu Button -->
+                 <div class="flex items-center md:hidden">
+                    <button class="text-gray-500 hover:text-gray-700 p-2">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- ================================================================================== -->
+    <!-- MAIN CONTENT CONTAINER -->
+    <!-- ================================================================================== -->
+    <main class="flex-grow">
+
+        <!-- 
+            1. HOMEPAGE VIEW (index.html) 
+        -->
+        <div id="view-home" class="page-view block">
+            <!-- Hero -->
+            <section class="bg-white border-b border-gray-100">
+                <div class="max-w-7xl mx-auto px-4 py-20 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center">
+                    <div class="md:w-1/2 mb-10 md:mb-0">
+                        <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 leading-tight mb-4">
+                            Simulate the Real <br>
+                            <span class="text-blue-600">IELTS Computer Test</span>
+                        </h1>
+                        <p class="text-lg text-gray-500 mb-8 max-w-lg">
+                            Practice with our exact replica of the official test interface. Get instant results, analytics, and improve your band score today.
+                        </p>
+                        <div class="flex gap-4">
+                            <button onclick="app.router.navigate('list', 'reading')" class="bg-blue-600 text-white px-8 py-3 rounded-lg font-bold hover:bg-blue-700 transition">
+                                Start Practice
+                            </button>
+                            <button onclick="app.router.navigate('profile')" class="bg-white text-blue-600 border border-blue-600 px-8 py-3 rounded-lg font-bold hover:bg-blue-50 transition">
+                                My Dashboard
+                            </button>
+                        </div>
+                    </div>
+                    <div class="md:w-1/2 pl-0 md:pl-10">
+                        <div class="bg-gray-100 rounded-xl p-2 shadow-2xl transform rotate-2 hover:rotate-0 transition duration-500">
+                            <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="rounded-lg w-full h-64 object-cover" alt="IELTS Platform Interface">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Test Types Grid -->
+            <section class="py-16 bg-gray-50">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center mb-12">
+                        <h2 class="text-3xl font-bold text-gray-900">Comprehensive Practice Modules</h2>
+                        <p class="mt-4 text-gray-500">Select a module to browse available tests</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                        <!-- Reading -->
+                        <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition cursor-pointer border-t-4 border-blue-500" onclick="app.router.navigate('list', 'reading')">
+                            <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center text-blue-600 mb-4">
+                                <i class="fa-solid fa-book-open text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">Reading</h3>
+                            <p class="text-gray-500 text-sm mb-4">Academic & GT modules. Split screen interface just like the real exam.</p>
+                            <span class="text-blue-600 text-sm font-semibold group-hover:underline">Browse Tests &rarr;</span>
+                        </div>
+
+                        <!-- Listening -->
+                        <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition cursor-pointer border-t-4 border-red-500" onclick="app.router.navigate('list', 'listening')">
+                            <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center text-red-600 mb-4">
+                                <i class="fa-solid fa-headphones text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">Listening</h3>
+                            <p class="text-gray-500 text-sm mb-4">High-quality audio. Drag & drop, multiple choice, and map completion tasks.</p>
+                            <span class="text-red-600 text-sm font-semibold group-hover:underline">Browse Tests &rarr;</span>
+                        </div>
+
+                        <!-- Writing -->
+                        <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition cursor-pointer border-t-4 border-yellow-500" onclick="app.router.navigate('list', 'writing')">
+                            <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center text-yellow-600 mb-4">
+                                <i class="fa-solid fa-pen-nib text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">Writing</h3>
+                            <p class="text-gray-500 text-sm mb-4">Task 1 & 2. Includes word counter and auto-save functionality.</p>
+                            <span class="text-yellow-600 text-sm font-semibold group-hover:underline">Browse Tests &rarr;</span>
+                        </div>
+
+                        <!-- Speaking -->
+                        <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition cursor-pointer border-t-4 border-green-500" onclick="app.router.navigate('list', 'speaking')">
+                            <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center text-green-600 mb-4">
+                                <i class="fa-solid fa-microphone text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">Speaking</h3>
+                            <p class="text-gray-500 text-sm mb-4">Simulate the examiner interaction with our AI-powered recorder.</p>
+                            <span class="text-green-600 text-sm font-semibold group-hover:underline">Browse Tests &rarr;</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+
+        <!-- 
+            2. TESTS LIST VIEW (test_list.html) 
+            Dynamic Template: This will loop through DB objects in Django
+        -->
+        <div id="view-list" class="page-view hidden">
+            <div class="bg-blue-800 text-white py-12">
+                <div class="max-w-7xl mx-auto px-4">
+                    <h1 id="list-title" class="text-3xl font-bold capitalize">Reading Tests</h1>
+                    <p class="opacity-80 mt-2">Browse our extensive library of Cambridge and Recent Actual Tests.</p>
+                </div>
+            </div>
+
+            <div class="max-w-7xl mx-auto px-4 py-8 flex flex-col lg:flex-row gap-8">
+                
+                <!-- Sidebar Filters -->
+                <aside class="w-full lg:w-64 flex-shrink-0">
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200 sticky top-20">
+                        <h3 class="font-bold text-gray-800 mb-4">Filters</h3>
+                        
+                        <div class="mb-4">
+                            <label class="text-xs font-semibold text-gray-500 uppercase">Search</label>
+                            <input type="text" placeholder="Test name..." class="w-full border rounded px-3 py-2 text-sm mt-1">
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="text-xs font-semibold text-gray-500 uppercase">Category</label>
+                            <div class="mt-2 space-y-2">
+                                <label class="flex items-center text-sm text-gray-600">
+                                    <input type="checkbox" class="mr-2 rounded text-blue-600"> Academic
+                                </label>
+                                <label class="flex items-center text-sm text-gray-600">
+                                    <input type="checkbox" class="mr-2 rounded text-blue-600"> General Training
+                                </label>
+                            </div>
+                        </div>
+
+                        <button class="w-full bg-blue-600 text-white py-2 rounded text-sm font-medium hover:bg-blue-700">Apply Filters</button>
+                    </div>
+                </aside>
+
+                <!-- Tests Grid -->
+                <div class="flex-grow">
+                    <!-- Django For Loop Here -->
+                    <div id="test-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                        <!-- This content is populated by JS for demo, but represents django objects -->
+                    </div>
+                    
+                    <!-- Pagination Mock -->
+                    <div class="mt-8 flex justify-center gap-2">
+                        <button class="px-3 py-1 border rounded hover:bg-gray-50">Previous</button>
+                        <button class="px-3 py-1 border rounded bg-blue-600 text-white">1</button>
+                        <button class="px-3 py-1 border rounded hover:bg-gray-50">2</button>
+                        <button class="px-3 py-1 border rounded hover:bg-gray-50">3</button>
+                        <button class="px-3 py-1 border rounded hover:bg-gray-50">Next</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- 
+            3. EXAM INTERFACE VIEW (take_test.html)
+            Adaptive layout based on test type
+        -->
+        <div id="view-exam" class="page-view hidden fixed inset-0 z-[100] bg-white flex flex-col">
+            <!-- Exam Header -->
+            <header class="h-16 bg-white border-b flex items-center justify-between px-6 shadow-sm flex-shrink-0">
+                <div class="flex items-center gap-4">
+                    <div class="text-sm">
+                        <span class="block text-gray-500 text-xs uppercase">Candidate</span>
+                        <span class="font-bold text-gray-800">John Doe</span>
+                    </div>
+                    <div class="h-8 w-px bg-gray-300"></div>
+                    <div class="text-sm">
+                        <span class="block text-gray-500 text-xs uppercase">Test</span>
+                        <span class="font-bold text-gray-800" id="exam-header-title">Cambridge 19 - Test 1</span>
+                    </div>
+                </div>
+
+                <!-- Listening Audio Player (Only shows for Listening) -->
+                <div id="exam-audio-player" class="hidden flex-1 max-w-md mx-8 bg-gray-100 rounded-full px-4 py-2 flex items-center gap-3">
+                    <button class="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center hover:bg-blue-700"><i class="fa-solid fa-play text-xs"></i></button>
+                    <div class="h-1 bg-gray-300 flex-grow rounded-full overflow-hidden">
+                        <div class="h-full bg-blue-500 w-1/3"></div>
+                    </div>
+                    <span class="text-xs font-mono text-gray-600">12:30 / 30:00</span>
+                </div>
+
+                <div class="flex items-center gap-4">
+                    <div class="bg-gray-100 px-4 py-1 rounded text-xl font-mono font-bold text-gray-700">
+                        <i class="fa-regular fa-clock mr-2 text-sm text-gray-400"></i><span id="exam-timer">59:59</span>
+                    </div>
+                    <button onclick="app.router.navigate('result')" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded text-sm font-bold uppercase tracking-wide">Finish Test</button>
+                </div>
+            </header>
+
+            <!-- Exam Body -->
+            <div class="flex-grow flex overflow-hidden relative" id="exam-body">
+                
+                <!-- LEFT PANE (Passage / Prompt) -->
+                <div id="pane-left" class="w-1/2 overflow-y-auto test-scroll p-8 border-r bg-white">
+                    <div id="content-reading" class="hidden">
+                        <h2 class="text-2xl font-bold mb-4">The Future of Urban Planning</h2>
+                        <p class="mb-4 leading-7 text-gray-700">Urban planning is changing rapidly. As cities grow, the need for sustainable development becomes paramount. Architects and planners are now focusing on "green cities" which prioritize pedestrian spaces over automotive infrastructure. Recent studies show that increasing green spaces improves mental health...</p>
+                        <p class="mb-4 leading-7 text-gray-700">Furthermore, the concept of the "15-minute city" has gained traction. This urban design concept proposes that most daily necessities and services, such as work, shopping, education, healthcare, and leisure can be easily reached by a 15-minute walk or bike ride from any point in the city.</p>
+                        <div class="h-64 bg-gray-100 rounded flex items-center justify-center text-gray-400 mb-4">Chart / Image Placeholder</div>
+                        <p class="mb-4 leading-7 text-gray-700">Critics, however, argue that such transformations require massive infrastructure overhaul and could lead to gentrification if not managed correctly.</p>
+                        <!-- Filler for scroll -->
+                        <div class="space-y-4">
+                             <p class="h-4 bg-gray-100 w-full"></p>
+                             <p class="h-4 bg-gray-100 w-5/6"></p>
+                             <p class="h-4 bg-gray-100 w-4/6"></p>
+                        </div>
+                    </div>
+
+                    <div id="content-writing" class="hidden">
+                        <div class="bg-yellow-50 border border-yellow-200 p-4 rounded mb-6">
+                            <span class="text-xs font-bold text-yellow-800 uppercase mb-1 block">Writing Task 2</span>
+                            <h3 class="font-bold text-gray-900 text-lg">You should spend about 40 minutes on this task.</h3>
+                        </div>
+                        <p class="font-serif text-lg leading-relaxed text-gray-800 mb-6 border-l-4 border-gray-800 pl-4">
+                            Some people believe that the best way to solve environmental problems is to increase the cost of fuel for cars and other vehicles.<br><br>
+                            To what extent do you agree or disagree?
+                        </p>
+                        <p class="text-sm text-gray-500">Give reasons for your answer and include any relevant examples from your own knowledge or experience.<br>Write at least 250 words.</p>
+                    </div>
+
+                    <div id="content-speaking" class="hidden h-full flex flex-col items-center justify-center text-center">
+                        <div class="w-32 h-32 rounded-full bg-blue-50 flex items-center justify-center mb-6 animate-pulse">
+                            <i class="fa-solid fa-microphone text-4xl text-blue-600"></i>
+                        </div>
+                        <h2 class="text-2xl font-bold mb-2">Part 2: Cue Card</h2>
+                        <p class="text-gray-600 mb-6 max-w-md">Describe a book you read recently that you found useful.</p>
+                        <div class="bg-gray-50 p-6 rounded-lg text-left inline-block mb-8 border shadow-sm">
+                            <ul class="list-disc list-inside text-gray-700 space-y-1">
+                                <li>What the book is</li>
+                                <li>Who wrote it</li>
+                                <li>What it is about</li>
+                                <li>And explain why you found it useful</li>
+                            </ul>
+                        </div>
+                        <button class="bg-red-600 text-white px-8 py-3 rounded-full font-bold shadow-lg hover:bg-red-700 flex items-center gap-2">
+                            <div class="w-3 h-3 bg-white rounded-full animate-ping"></div> Start Recording
+                        </button>
+                    </div>
+                </div>
+
+                <!-- RIGHT PANE (Inputs / Questions) -->
+                <div id="pane-right" class="w-1/2 overflow-y-auto test-scroll bg-gray-50 p-8">
+                    
+                    <!-- Writing Text Area -->
+                    <div id="inputs-writing" class="hidden h-full flex flex-col">
+                        <textarea class="flex-grow w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none font-mono text-sm leading-relaxed" placeholder="Start typing your essay here..."></textarea>
+                        <div class="mt-2 flex justify-end text-sm text-gray-600 font-bold">
+                            Word Count: <span class="ml-1 text-blue-600">0</span>
+                        </div>
+                    </div>
+
+                    <!-- Multiple Choice (Reading/Listening) -->
+                    <div id="inputs-standard" class="hidden">
+                        <!-- Question Block -->
+                        <div class="mb-8">
+                            <h3 class="font-bold text-gray-800 mb-4">Questions 1-3</h3>
+                            <p class="text-sm text-gray-500 mb-4">Choose the correct letter, A, B, C or D.</p>
+                            
+                            <div class="space-y-6">
+                                <div class="bg-white p-4 rounded border border-gray-200 shadow-sm" id="q1">
+                                    <p class="font-semibold mb-3"><span class="bg-gray-800 text-white px-2 py-0.5 rounded text-sm mr-2">1</span> What is the main focus of recent urban planning?</p>
+                                    <div class="space-y-2 pl-2">
+                                        <label class="flex items-center gap-3 cursor-pointer"><input type="radio" name="q1" class="h-4 w-4"> <span>Automotive infrastructure</span></label>
+                                        <label class="flex items-center gap-3 cursor-pointer"><input type="radio" name="q1" class="h-4 w-4"> <span>Green cities and pedestrians</span></label>
+                                        <label class="flex items-center gap-3 cursor-pointer"><input type="radio" name="q1" class="h-4 w-4"> <span>Industrial expansion</span></label>
+                                    </div>
+                                </div>
+
+                                <div class="bg-white p-4 rounded border border-gray-200 shadow-sm" id="q2">
+                                    <p class="font-semibold mb-3"><span class="bg-gray-800 text-white px-2 py-0.5 rounded text-sm mr-2">2</span> What is a "15-minute city"?</p>
+                                    <div class="space-y-2 pl-2">
+                                        <label class="flex items-center gap-3 cursor-pointer"><input type="radio" name="q2" class="h-4 w-4"> <span>A city you can drive across in 15 mins</span></label>
+                                        <label class="flex items-center gap-3 cursor-pointer"><input type="radio" name="q2" class="h-4 w-4"> <span>A city with 15-minute speed limits</span></label>
+                                        <label class="flex items-center gap-3 cursor-pointer"><input type="radio" name="q2" class="h-4 w-4"> <span>Accessing needs within a 15-min walk/ride</span></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Fill in the blanks Block -->
+                        <div class="mb-8">
+                            <h3 class="font-bold text-gray-800 mb-4">Questions 3-5</h3>
+                            <p class="text-sm text-gray-500 mb-4">Complete the summary using NO MORE THAN TWO WORDS.</p>
+                            <div class="bg-white p-6 rounded border border-gray-200 shadow-sm leading-8 text-gray-800">
+                                Critics argue that changes might lead to <input type="text" class="border-b-2 border-gray-400 w-32 focus:outline-none focus:border-blue-600 px-1 text-center font-bold text-blue-700"> (3) if not managed well.
+                                Furthermore, the infrastructure requires a <input type="text" class="border-b-2 border-gray-400 w-32 focus:outline-none focus:border-blue-600 px-1 text-center font-bold text-blue-700"> (4) overhaul.
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Exam Footer (Navigation) -->
+            <footer class="h-16 bg-gray-800 text-white flex items-center px-4 justify-between flex-shrink-0">
+                <div class="flex items-center gap-2 overflow-x-auto scrollbar-hide max-w-3xl">
+                    <span class="text-xs uppercase text-gray-400 font-bold mr-2">Review:</span>
+                    <button class="q-btn w-8 h-8 rounded border border-gray-600 text-sm hover:bg-gray-700 flex items-center justify-center active">1</button>
+                    <button class="q-btn w-8 h-8 rounded border border-gray-600 text-sm hover:bg-gray-700 flex items-center justify-center answered">2</button>
+                    <button class="q-btn w-8 h-8 rounded border border-gray-600 text-sm hover:bg-gray-700 flex items-center justify-center flagged">3</button>
+                    <button class="q-btn w-8 h-8 rounded border border-gray-600 text-sm hover:bg-gray-700 flex items-center justify-center">4</button>
+                </div>
+                <div class="flex gap-4">
+                     <button class="text-gray-400 hover:text-white"><i class="fa-solid fa-chevron-left"></i></button>
+                     <button class="text-gray-400 hover:text-white"><i class="fa-solid fa-chevron-right"></i></button>
+                </div>
+            </footer>
+        </div>
+
+
+        <!-- 
+            4. RESULTS VIEW (results.html)
+        -->
+        <div id="view-result" class="page-view hidden py-10">
+            <div class="max-w-5xl mx-auto px-4">
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden mb-8">
+                    <div class="bg-gradient-to-r from-blue-800 to-blue-600 p-8 text-white flex flex-col md:flex-row items-center justify-between">
+                        <div>
+                            <h2 class="text-3xl font-bold">Excellent Work, John!</h2>
+                            <p class="mt-2 opacity-90">Cambridge 19 - Test 1 (Reading)</p>
+                            <div class="mt-4 flex gap-3">
+                                <span class="bg-blue-900 bg-opacity-40 px-3 py-1 rounded text-sm"><i class="fa-regular fa-clock mr-1"></i> Time: 54:20</span>
+                                <span class="bg-blue-900 bg-opacity-40 px-3 py-1 rounded text-sm"><i class="fa-regular fa-calendar mr-1"></i> Date: Oct 24, 2024</span>
+                            </div>
+                        </div>
+                        <div class="mt-6 md:mt-0 flex items-center gap-6">
+                            <div class="text-center">
+                                <div class="text-5xl font-bold">7.5</div>
+                                <div class="text-xs uppercase font-bold tracking-wider opacity-80">Band Score</div>
+                            </div>
+                            <div class="h-12 w-px bg-white opacity-20"></div>
+                            <div class="text-center">
+                                <div class="text-2xl font-bold">32<span class="text-base font-normal opacity-70">/40</span></div>
+                                <div class="text-xs uppercase font-bold tracking-wider opacity-80">Correct</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="p-8">
+                        <h3 class="font-bold text-gray-800 text-lg mb-6">Performance Analysis</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <!-- Chart Placeholder -->
+                            <div class="bg-gray-50 rounded p-6 border flex flex-col items-center justify-center h-64">
+                                <div class="text-gray-400 mb-2"><i class="fa-solid fa-chart-pie text-4xl"></i></div>
+                                <p class="text-gray-500 text-sm">Question Type Analysis Chart</p>
+                                <p class="text-xs text-gray-400 mt-1">(Multiple Choice: 80%, Fill-ups: 60%)</p>
+                            </div>
+                            
+                            <!-- Advice -->
+                            <div>
+                                <h4 class="font-bold text-sm uppercase text-gray-500 mb-3">Recommendations</h4>
+                                <ul class="space-y-3">
+                                    <li class="flex items-start gap-3">
+                                        <i class="fa-solid fa-circle-check text-green-500 mt-1"></i>
+                                        <span class="text-sm text-gray-600">Great job on "Multiple Choice" questions. You have high accuracy here.</span>
+                                    </li>
+                                    <li class="flex items-start gap-3">
+                                        <i class="fa-solid fa-circle-exclamation text-yellow-500 mt-1"></i>
+                                        <span class="text-sm text-gray-600">Work on "True/False/Not Given". You missed 4 questions in this category.</span>
+                                    </li>
+                                    <li class="flex items-start gap-3">
+                                        <i class="fa-solid fa-clock text-blue-500 mt-1"></i>
+                                        <span class="text-sm text-gray-600">Your pacing was good, finishing with 5 minutes to spare.</span>
+                                    </li>
+                                </ul>
+                                <button class="mt-6 text-blue-600 font-bold text-sm hover:underline">View Detailed Answer Key &rarr;</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-between">
+                    <button onclick="app.router.navigate('list', 'reading')" class="text-gray-600 font-semibold hover:text-gray-900">&larr; Back to Library</button>
+                    <button onclick="app.router.navigate('exam')" class="bg-blue-600 text-white px-6 py-2 rounded shadow hover:bg-blue-700 transition">Retake Test</button>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- 
+            5. ACCOUNT/PROFILE VIEW (profile.html)
+        -->
+        <div id="view-profile" class="page-view hidden py-10 bg-gray-50">
+            <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-4 gap-8">
+                
+                <!-- Sidebar -->
+                <div class="lg:col-span-1">
+                    <div class="bg-white rounded-lg shadow p-6 text-center">
+                        <div class="w-24 h-24 rounded-full bg-blue-100 text-blue-600 text-3xl font-bold flex items-center justify-center mx-auto mb-4">JD</div>
+                        <h2 class="font-bold text-xl text-gray-800">John Doe</h2>
+                        <p class="text-gray-500 text-sm">Member since 2023</p>
+                        <div class="mt-4 inline-block bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-xs font-bold uppercase">Free User</div>
+                        
+                        <div class="mt-8 border-t pt-4 text-left space-y-2">
+                            <a href="#" class="block px-4 py-2 bg-blue-50 text-blue-700 font-medium rounded">Dashboard</a>
+                            <a href="#" class="block px-4 py-2 text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded">My Test History</a>
+                            <a href="#" class="block px-4 py-2 text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded">Account Settings</a>
+                            <a href="#" class="block px-4 py-2 text-red-600 hover:bg-red-50 rounded mt-4">Log Out</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Dashboard -->
+                <div class="lg:col-span-3 space-y-6">
+                    <!-- Stats Cards -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="bg-white p-6 rounded-lg shadow border-l-4 border-blue-500">
+                            <div class="text-gray-500 text-sm font-medium uppercase">Tests Taken</div>
+                            <div class="text-3xl font-bold text-gray-800 mt-2">14</div>
+                        </div>
+                        <div class="bg-white p-6 rounded-lg shadow border-l-4 border-green-500">
+                            <div class="text-gray-500 text-sm font-medium uppercase">Avg Band Score</div>
+                            <div class="text-3xl font-bold text-gray-800 mt-2">6.5</div>
+                        </div>
+                        <div class="bg-white p-6 rounded-lg shadow border-l-4 border-purple-500">
+                            <div class="text-gray-500 text-sm font-medium uppercase">Target Score</div>
+                            <div class="text-3xl font-bold text-gray-800 mt-2">7.5</div>
+                        </div>
+                    </div>
+
+                    <!-- Progress Section -->
+                    <div class="bg-white rounded-lg shadow p-6">
+                        <h3 class="font-bold text-gray-800 mb-6">Skill Progress</h3>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 justify-items-center">
+                            <div class="text-center">
+                                <div class="progress-circle flex items-center justify-center mb-3 mx-auto shadow-inner"><span class="font-bold text-xl">7.0</span></div>
+                                <span class="text-sm font-bold text-gray-600">Reading</span>
+                            </div>
+                            <div class="text-center">
+                                <div class="progress-circle flex items-center justify-center mb-3 mx-auto shadow-inner" style="background: radial-gradient(closest-side, white 79%, transparent 80% 100%), conic-gradient(#10b981 65%, #e5e7eb 0);"><span class="font-bold text-xl">6.5</span></div>
+                                <span class="text-sm font-bold text-gray-600">Listening</span>
+                            </div>
+                            <div class="text-center">
+                                <div class="progress-circle flex items-center justify-center mb-3 mx-auto shadow-inner" style="background: radial-gradient(closest-side, white 79%, transparent 80% 100%), conic-gradient(#f59e0b 60%, #e5e7eb 0);"><span class="font-bold text-xl">6.0</span></div>
+                                <span class="text-sm font-bold text-gray-600">Writing</span>
+                            </div>
+                            <div class="text-center">
+                                <div class="progress-circle flex items-center justify-center mb-3 mx-auto shadow-inner" style="background: radial-gradient(closest-side, white 79%, transparent 80% 100%), conic-gradient(#ef4444 50%, #e5e7eb 0);"><span class="font-bold text-xl">5.5</span></div>
+                                <span class="text-sm font-bold text-gray-600">Speaking</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- History Table -->
+                    <div class="bg-white rounded-lg shadow overflow-hidden">
+                        <div class="px-6 py-4 border-b border-gray-200">
+                            <h3 class="font-bold text-gray-800">Recent Activity</h3>
+                        </div>
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Test Name</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Score</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Cambridge 18 - Test 2</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><span class="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs">Reading</span></td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2 days ago</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-green-600">7.5</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-blue-600 hover:underline cursor-pointer">Review</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Actual Test Oct 2024</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><span class="px-2 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs">Writing</span></td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">5 days ago</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-yellow-600">6.0</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-blue-600 hover:underline cursor-pointer">Review</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- ================================================================================== -->
+    <!-- DJANGO TEMPLATE: base.html (FOOTER) -->
+    <!-- ================================================================================== -->
+    <footer class="bg-white border-t border-gray-200 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <span class="font-bold text-xl text-blue-900">IELTS<span class="text-blue-600">Pro</span></span>
+                    <p class="text-sm text-gray-400 mt-1">Copyright &copy; 2024. All rights reserved.</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-gray-600"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-gray-600"><i class="fa-brands fa-twitter"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-gray-600"><i class="fa-brands fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- MODAL: LOGIN (Populate this via JS) -->
+    <div id="modal-login" class="hidden fixed inset-0 z-[60] overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true" onclick="app.modal.close()"></div>
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+            <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                    <div class="sm:flex sm:items-start">
+                        <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
+                            <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4" id="modal-title">Log in to your account</h3>
+                            <div class="space-y-4">
+                                <input type="email" placeholder="Email address" class="w-full border rounded px-3 py-2">
+                                <input type="password" placeholder="Password" class="w-full border rounded px-3 py-2">
+                                <button onclick="app.modal.close(); app.router.navigate('profile');" class="w-full bg-blue-600 text-white font-bold py-2 rounded hover:bg-blue-700">Log In</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-  <!-- ***** Preloader End ***** -->
 
-  <!-- ***** Header Area Start ***** -->
-  <header class="header-area header-sticky wow slideInDown" data-wow-duration="0.75s" data-wow-delay="0s">
-    <div class="container">
-      <div class="row">
-        <div class="col-12">
-          <nav class="main-nav">
-            <!-- ***** Logo Start ***** -->
-            <a href="index.html" class="logo">
-              <h4>Spac<span>Dyna</span></h4>
-            </a>
-            <!-- ***** Logo End ***** -->
-            <!-- ***** Menu Start ***** -->
-            <ul class="nav">
-              <li class="scroll-to-section"><a href="#top" class="active">Home</a></li>
-              <li class="scroll-to-section"><a href="#about">About Us</a></li>
-              <li class="scroll-to-section"><a href="#services">Services</a></li>
-              <li class="scroll-to-section"><a href="#portfolio">Portfolio</a></li>
-              <li class="scroll-to-section"><a href="#blog">Blog</a></li> 
-              <li class="scroll-to-section"><a href="#contact">Message Us</a></li> 
-              <li class="scroll-to-section"><div class="main-red-button"><a href="#contact">Contact Now</a></div></li> 
-            </ul>        
-            <a class='menu-trigger'>
-                <span>Menu</span>
-            </a>
-            <!-- ***** Menu End ***** -->
-          </nav>
-        </div>
-      </div>
-    </div>
-  </header>
-  <!-- ***** Header Area End ***** -->
 
-  <div class="main-banner wow fadeIn" id="top" data-wow-duration="1s" data-wow-delay="0.5s">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-12">
-          <div class="row">
-            <div class="col-lg-6 align-self-center">
-              <div class="left-content header-text wow fadeInLeft" data-wow-duration="1s" data-wow-delay="1s">
-                <h6>Welcome to Space Dynamic</h6>
-                <h2>We Make <em>Digital Ideas</em> &amp; <span>SEO</span> Marketing</h2>
-                <p>Space Dynamic is a professional looking HTML template using a Bootstrap 5 (beta 2). This CSS template is free for you provided by <a rel="nofollow" href="https://templatemo.com/page/1" target="_parent">TemplateMo</a>.</p>
-                <form id="search" action="#" method="GET">
-                  <fieldset>
-                    <input type="address" name="address" class="email" placeholder="Your website URL..." autocomplete="on" required>
-                  </fieldset>
-                  <fieldset>
-                    <button type="submit" class="main-button">Analyze Site</button>
-                  </fieldset>
-                </form>
-              </div>
-            </div>
-            <div class="col-lg-6">
-              <div class="right-image wow fadeInRight" data-wow-duration="1s" data-wow-delay="0.5s">
-                <img src="{% static 'assets/images/banner-right-image.png' %}" alt="team meeting">
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+    <!-- APP LOGIC (Mocking Django Views) -->
+    <script>
+        const app = {
+            data: {
+                currentTestType: 'reading', // reading, listening, writing, speaking
+                tests: [
+                    { id: 1, type: 'reading', title: 'Cambridge 19 - Test 1', category: 'Academic', duration: '60m' },
+                    { id: 2, type: 'reading', title: 'Cambridge 19 - Test 2', category: 'Academic', duration: '60m' },
+                    { id: 3, type: 'listening', title: 'Listening Vol 4 - Test 1', category: 'General', duration: '30m' },
+                    { id: 4, type: 'writing', title: 'Task 2: Education', category: 'Academic', duration: '40m' },
+                    { id: 5, type: 'speaking', title: 'Part 2 Cue Card: Hobbies', category: 'All', duration: '15m' },
+                ]
+            },
 
-  <div id="about" class="about-us section">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-4">
-          <div class="left-image wow fadeIn" data-wow-duration="1s" data-wow-delay="0.2s">
-            <img src="{% static 'assets/images/about-left-image.png' %}" alt="person graphic">
-          </div>
-        </div>
-        <div class="col-lg-8 align-self-center">
-          <div class="services">
-            <div class="row">
-              <div class="col-lg-6">
-                <div class="item wow fadeIn" data-wow-duration="1s" data-wow-delay="0.5s">
-                  <div class="icon">
-                    <img src="{% static 'assets/images/service-icon-01.png' %}" alt="reporting">
-                  </div>
-                  <div class="right-text">
-                    <h4>Data Analysis</h4>
-                    <p>Lorem ipsum dolor sit amet, ctetur aoi adipiscing eliter</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-6">
-                <div class="item wow fadeIn" data-wow-duration="1s" data-wow-delay="0.7s">
-                  <div class="icon">
-                    <img src="{% static 'assets/images/service-icon-02.png' %}" alt="">
-                  </div>
-                    <div class="right-text">
-                      <h4>Data Reporting</h4>
-                    <p>Lorem ipsum dolor sit amet, ctetur aoi adipiscing eliter</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-6">
-                <div class="item wow fadeIn" data-wow-duration="1s" data-wow-delay="0.9s">
-                  <div class="icon">
-                    <img src="{% static 'assets/images/service-icon-03.png' %}" alt="">
-                  </div>
-                  <div class="right-text">
-                    <h4>Web Analytics</h4>
-                    <p>Lorem ipsum dolor sit amet, ctetur aoi adipiscing eliter</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-6">
-                <div class="item wow fadeIn" data-wow-duration="1s" data-wow-delay="1.1s">
-                  <div class="icon">
-                    <img src="{% static 'assets/images/service-icon-04.png' %}" alt="">
-                  </div>
-                  <div class="right-text">
-                    <h4>SEO Suggestions</h4>
-                    <p>Lorem ipsum dolor sit amet, ctetur aoi adipiscing eliter</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+            router: {
+                navigate: function(viewId, param = null) {
+                    // Hide all views
+                    document.querySelectorAll('.page-view').forEach(el => {
+                        el.classList.add('hidden');
+                        el.classList.remove('block');
+                    });
 
-  <div id="services" class="our-services section">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-6 align-self-center  wow fadeInLeft" data-wow-duration="1s" data-wow-delay="0.2s">
-          <div class="left-image">
-            <img src="{% static 'assets/images/services-left-image.png' %}" alt="">
-          </div>
-        </div>
-        <div class="col-lg-6 wow fadeInRight" data-wow-duration="1s" data-wow-delay="0.2s">
-          <div class="section-heading">
-            <h2>Grow your website with our <em>SEO</em> service &amp; <span>Project</span> Ideas</h2>
-            <p>Space Dynamic HTML5 template is free to use for your website projects. However, you are not permitted to redistribute the template ZIP file on any CSS template collection websites. Please contact us for more information. Thank you for your kind cooperation.</p>
-          </div>
-          <div class="row">
-            <div class="col-lg-12">
-              <div class="first-bar progress-skill-bar">
-                <h4>Website Analysis</h4>
-                <span>84%</span>
-                <div class="filled-bar"></div>
-                <div class="full-bar"></div>
-              </div>
-            </div>
-            <div class="col-lg-12">
-              <div class="second-bar progress-skill-bar">
-                <h4>SEO Reports</h4>
-                <span>88%</span>
-                <div class="filled-bar"></div>
-                <div class="full-bar"></div>
-              </div>
-            </div>
-            <div class="col-lg-12">
-              <div class="third-bar progress-skill-bar">
-                <h4>Page Optimizations</h4>
-                <span>94%</span>
-                <div class="filled-bar"></div>
-                <div class="full-bar"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+                    // Handle params (like context data in Django)
+                    if (viewId === 'list' && param) {
+                        app.data.currentTestType = param;
+                        app.renderer.renderList(param);
+                    }
+                    if (viewId === 'exam') {
+                        app.renderer.setupExam(app.data.currentTestType);
+                    }
 
-  <div id="portfolio" class="our-portfolio section">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-6 offset-lg-3">
-          <div class="section-heading  wow bounceIn" data-wow-duration="1s" data-wow-delay="0.2s">
-            <h2>See What Our Agency <em>Offers</em> &amp; What We <span>Provide</span></h2>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-lg-3 col-sm-6">
-          <a href="#">
-            <div class="item wow bounceInUp" data-wow-duration="1s" data-wow-delay="0.3s">
-              <div class="hidden-content">
-                <h4>SEO Analysis</h4>
-                <p>Lorem ipsum dolor sit ameti ctetur aoi adipiscing eto.</p>
-              </div>
-              <div class="showed-content">
-                <img src="{% static 'assets/images/portfolio-image.png' %}" alt="">
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="col-lg-3 col-sm-6">
-          <a href="#">
-            <div class="item wow bounceInUp" data-wow-duration="1s" data-wow-delay="0.4s">
-              <div class="hidden-content">
-                <h4>Website Reporting</h4>
-                <p>Lorem ipsum dolor sit ameti ctetur aoi adipiscing eto.</p>
-              </div>
-              <div class="showed-content">
-                <img src="{% static 'assets/images/portfolio-image.png' %}" alt="">
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="col-lg-3 col-sm-6">
-          <a href="#">
-            <div class="item wow bounceInUp" data-wow-duration="1s" data-wow-delay="0.5s">
-              <div class="hidden-content">
-                <h4>Performance Tests</h4>
-                <p>Lorem ipsum dolor sit ameti ctetur aoi adipiscing eto.</p>
-              </div>
-              <div class="showed-content">
-                <img src="{% static 'assets/images/portfolio-image.png' %}" alt="">
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="col-lg-3 col-sm-6">
-          <a href="#">
-            <div class="item wow bounceInUp" data-wow-duration="1s" data-wow-delay="0.6s">
-              <div class="hidden-content">
-                <h4>Data Analysis</h4>
-                <p>Lorem ipsum dolor sit ameti ctetur aoi adipiscing eto.</p>
-              </div>
-              <div class="showed-content">
-                <img src="{% static 'assets/images/portfolio-image.png' %}" alt="">
-              </div>
-            </div>
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
+                    // Show target view
+                    const target = document.getElementById(`view-${viewId}`);
+                    if(target) {
+                        target.classList.remove('hidden');
+                        target.classList.add('block');
+                        window.scrollTo(0,0);
+                    }
+                }
+            },
 
-  <div id="blog" class="our-blog section">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-6 wow fadeInDown" data-wow-duration="1s" data-wow-delay="0.25s">
-          <div class="section-heading">
-            <h2>Check Out What Is <em>Trending</em> In Our Latest <span>News</span></h2>
-          </div>
-        </div>
-        <div class="col-lg-6 wow fadeInDown" data-wow-duration="1s" data-wow-delay="0.25s">
-          <div class="top-dec">
-            <img src="{% static 'assets/images/blog-dec.png' %}" alt="">
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-lg-6 wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.25s">
-          <div class="left-image">
-            <a href="#"><img src="{% static 'assets/images/big-blog-thumb.jpg' %}" alt="Workspace Desktop"></a>
-            <div class="info">
-              <div class="inner-content">
-                <ul>
-                  <li><i class="fa fa-calendar"></i> 24 Mar 2021</li>
-                  <li><i class="fa fa-users"></i> TemplateMo</li>
-                  <li><i class="fa fa-folder"></i> Branding</li>
-                </ul>
-                <a href="#"><h4>SEO Agency &amp; Digital Marketing</h4></a>
-                <p>Lorem ipsum dolor sit amet, consectetur and sed doer ket eismod tempor incididunt ut labore et dolore magna...</p>
-                <div class="main-blue-button">
-                  <a href="#">Discover More</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-6 wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.25s">
-          <div class="right-list">
-            <ul>
-              <li>
-                <div class="left-content align-self-center">
-                  <span><i class="fa fa-calendar"></i> 18 Mar 2021</span>
-                  <a href="#"><h4>New Websites &amp; Backlinks</h4></a>
-                  <p>Lorem ipsum dolor sit amsecteturii and sed doer ket eismod...</p>
-                </div>
-                <div class="right-image">
-                  <a href="#"><img src="{% static 'assets/images/blog-thumb-01.jpg' %}" alt=""></a>
-                </div>
-              </li>
-              <li>
-                <div class="left-content align-self-center">
-                  <span><i class="fa fa-calendar"></i> 14 Mar 2021</span>
-                  <a href="#"><h4>SEO Analysis &amp; Content Ideas</h4></a>
-                  <p>Lorem ipsum dolor sit amsecteturii and sed doer ket eismod...</p>
-                </div>
-                <div class="right-image">
-                  <a href="#"><img src="{% static 'assets/images/blog-thumb-01.jpg' %}" alt=""></a>
-                </div>
-              </li>
-              <li>
-                <div class="left-content align-self-center">
-                  <span><i class="fa fa-calendar"></i> 06 Mar 2021</span>
-                  <a href="#"><h4>SEO Tips &amp; Digital Marketing</h4></a>
-                  <p>Lorem ipsum dolor sit amsecteturii and sed doer ket eismod...</p>
-                </div>
-                <div class="right-image">
-                  <a href="#"><img src="{% static 'assets/images/blog-thumb-01.jpg' %}" alt=""></a>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+            renderer: {
+                // Mimics Django ListView
+                renderList: function(type) {
+                    document.getElementById('list-title').textContent = type.charAt(0).toUpperCase() + type.slice(1) + " Tests Library";
+                    
+                    const grid = document.getElementById('test-grid');
+                    grid.innerHTML = ''; // Clear
 
-  <div id="contact" class="contact-us section">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-6 align-self-center wow fadeInLeft" data-wow-duration="0.5s" data-wow-delay="0.25s">
-          <div class="section-heading">
-            <h2>Feel Free To Send Us a Message About Your Website Needs</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doer ket eismod tempor incididunt ut labore et dolores</p>
-            <div class="phone-info">
-              <h4>For any enquiry, Call Us: <span><i class="fa fa-phone"></i> <a href="#">010-020-0340</a></span></h4>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-6 wow fadeInRight" data-wow-duration="0.5s" data-wow-delay="0.25s">
-          <form id="contact" action="" method="post">
-            <div class="row">
-              <div class="col-lg-6">
-                <fieldset>
-                  <input type="name" name="name" id="name" placeholder="Name" autocomplete="on" required>
-                </fieldset>
-              </div>
-              <div class="col-lg-6">
-                <fieldset>
-                  <input type="surname" name="surname" id="surname" placeholder="Surname" autocomplete="on" required>
-                </fieldset>
-              </div>
-              <div class="col-lg-12">
-                <fieldset>
-                  <input type="text" name="email" id="email" pattern="[^ @]*@[^ @]*" placeholder="Your Email" required="">
-                </fieldset>
-              </div>
-              <div class="col-lg-12">
-                <fieldset>
-                  <textarea name="message" type="text" class="form-control" id="message" placeholder="Message" required=""></textarea>  
-                </fieldset>
-              </div>
-              <div class="col-lg-12">
-                <fieldset>
-                  <button type="submit" id="form-submit" class="main-button ">Send Message</button>
-                </fieldset>
-              </div>
-            </div>
-            <div class="contact-dec">
-              <img src="{% static 'assets/images/contact-decoration.png' %}" alt="">
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
+                    // Filter dummy data
+                    const filtered = app.data.tests.filter(t => t.type === type || t.type === 'all');
+                    
+                    // Fallback if no specific dummy data
+                    const items = filtered.length ? filtered : app.data.tests.slice(0,3); 
 
-  <footer>
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-12 wow fadeIn" data-wow-duration="1s" data-wow-delay="0.25s">
-          <p>© Copyright 2021 Space Dynamic Co. All Rights Reserved. 
-          
-          <br>Design: <a rel="nofollow" href="https://templatemo.com">TemplateMo</a></p>
-        </div>
-      </div>
-    </div>
-  </footer>
-  <!-- Scripts -->
-  <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
-  <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-  <script src="{% static 'assets/js/owl-carousel.js' %}"></script>
-  <script src="{% static 'assets/js/animation.js' %}"></script>
-  <script src="{% static 'assets/js/imagesloaded.js' %}"></script>
-  <script src="{% static 'assets/js/templatemo-custom.js' %}"></script>
+                    items.forEach(test => {
+                        const colorClass = type === 'reading' ? 'blue' : (type === 'listening' ? 'red' : (type === 'writing' ? 'yellow' : 'green'));
+                        const html = `
+                            <div class="bg-white rounded-lg shadow-sm hover:shadow-md transition border border-gray-100 flex flex-col">
+                                <div class="p-6 flex-grow">
+                                    <div class="flex justify-between items-start mb-4">
+                                        <span class="px-2 py-1 bg-${colorClass}-100 text-${colorClass}-800 text-xs rounded font-bold uppercase">${test.category}</span>
+                                        <span class="text-gray-400 text-xs"><i class="fa-regular fa-clock"></i> ${test.duration}</span>
+                                    </div>
+                                    <h3 class="font-bold text-gray-800 text-lg mb-2">${test.title}</h3>
+                                    <p class="text-gray-500 text-sm">Real exam simulation with instant band score evaluation.</p>
+                                </div>
+                                <div class="p-4 border-t border-gray-50 bg-gray-50 rounded-b-lg">
+                                    <button onclick="app.router.navigate('exam')" class="w-full bg-white border border-${colorClass}-500 text-${colorClass}-600 font-bold py-2 rounded hover:bg-${colorClass}-50 transition">
+                                        Take Test
+                                    </button>
+                                </div>
+                            </div>
+                        `;
+                        grid.innerHTML += html;
+                    });
+                },
 
+                // Sets up the Exam Interface based on type (Reading vs Listening vs Writing)
+                setupExam: function(type) {
+                    const leftPane = document.getElementById('pane-left');
+                    const rightPane = document.getElementById('pane-right');
+                    
+                    // Reset visibility
+                    document.getElementById('content-reading').classList.add('hidden');
+                    document.getElementById('content-writing').classList.add('hidden');
+                    document.getElementById('content-speaking').classList.add('hidden');
+                    document.getElementById('inputs-standard').classList.add('hidden');
+                    document.getElementById('inputs-writing').classList.add('hidden');
+                    document.getElementById('exam-audio-player').classList.add('hidden');
+
+                    // Reset widths (Writing/Speaking might need different layout)
+                    leftPane.className = "w-1/2 overflow-y-auto test-scroll p-8 border-r bg-white";
+                    rightPane.className = "w-1/2 overflow-y-auto test-scroll bg-gray-50 p-8";
+
+                    if (type === 'reading') {
+                        document.getElementById('content-reading').classList.remove('hidden');
+                        document.getElementById('inputs-standard').classList.remove('hidden');
+                        document.getElementById('exam-header-title').textContent = "Reading Practice Test";
+                    } 
+                    else if (type === 'listening') {
+                        document.getElementById('exam-audio-player').classList.remove('hidden');
+                        document.getElementById('inputs-standard').classList.remove('hidden');
+                        // Listening usually doesn't have a text passage on left, maybe questions on both sides or map on left
+                        // For demo, we keep standard input on right, map placeholder on left
+                        document.getElementById('content-reading').classList.remove('hidden'); 
+                        document.getElementById('exam-header-title').textContent = "Listening Practice Test";
+                    }
+                    else if (type === 'writing') {
+                        document.getElementById('content-writing').classList.remove('hidden');
+                        document.getElementById('inputs-writing').classList.remove('hidden');
+                        document.getElementById('exam-header-title').textContent = "Writing Practice Test";
+                    }
+                    else if (type === 'speaking') {
+                        // Speaking is usually centered prompt
+                        leftPane.className = "w-full overflow-y-auto test-scroll p-8 bg-white flex flex-col items-center justify-center";
+                        rightPane.className = "hidden";
+                        document.getElementById('content-speaking').classList.remove('hidden');
+                        document.getElementById('exam-header-title').textContent = "Speaking Practice Test";
+                    }
+                }
+            },
+
+            modal: {
+                open: function(id) {
+                    document.getElementById(`modal-${id}`).classList.remove('hidden');
+                },
+                close: function() {
+                    document.querySelectorAll('[id^="modal-"]').forEach(el => el.classList.add('hidden'));
+                }
+            }
+        };
+
+        // Init
+        document.addEventListener('DOMContentLoaded', () => {
+            app.router.navigate('home');
+        });
+    </script>
 </body>
 </html>

@@ -5,10 +5,10 @@ class TestView(TemplateView):
     template_name = "index.html"
 
 class Test1(TemplateView):
-    pass
+    template_name = "index2.html"
 
 class Test2(TemplateView):
-    pass
+    template_name = "index3.html"
 
 class Test3(TemplateView):
     pass
