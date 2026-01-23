@@ -1,0 +1,162 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+        <!-- 
+            3. EXAM INTERFACE VIEW (take_test.html)
+            Adaptive layout based on test type
+        -->
+        <div id="view-exam" class="page-view hidden fixed inset-0 z-[100] bg-white flex flex-col">
+            <!-- Exam Header -->
+            <header class="h-16 bg-white border-b flex items-center justify-between px-6 shadow-sm flex-shrink-0">
+                <div class="flex items-center gap-4">
+                    <div class="text-sm">
+                        <span class="block text-gray-500 text-xs uppercase">Candidate</span>
+                        <span class="font-bold text-gray-800">John Doe</span>
+                    </div>
+                    <div class="h-8 w-px bg-gray-300"></div>
+                    <div class="text-sm">
+                        <span class="block text-gray-500 text-xs uppercase">Test</span>
+                        <span class="font-bold text-gray-800" id="exam-header-title">Cambridge 19 - Test 1</span>
+                    </div>
+                </div>
+
+                <!-- Listening Audio Player (Only shows for Listening) -->
+                <div id="exam-audio-player" class="hidden flex-1 max-w-md mx-8 bg-gray-100 rounded-full px-4 py-2 flex items-center gap-3">
+                    <button class="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center hover:bg-blue-700"><i class="fa-solid fa-play text-xs"></i></button>
+                    <div class="h-1 bg-gray-300 flex-grow rounded-full overflow-hidden">
+                        <div class="h-full bg-blue-500 w-1/3"></div>
+                    </div>
+                    <span class="text-xs font-mono text-gray-600">12:30 / 30:00</span>
+                </div>
+
+                <div class="flex items-center gap-4">
+                    <div class="bg-gray-100 px-4 py-1 rounded text-xl font-mono font-bold text-gray-700">
+                        <i class="fa-regular fa-clock mr-2 text-sm text-gray-400"></i><span id="exam-timer">59:59</span>
+                    </div>
+                    <button onclick="app.router.navigate('result')" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded text-sm font-bold uppercase tracking-wide">Finish Test</button>
+                </div>
+            </header>
+
+            <!-- Exam Body -->
+            <div class="flex-grow flex overflow-hidden relative" id="exam-body">
+                
+                <!-- LEFT PANE (Passage / Prompt) -->
+                <div id="pane-left" class="w-1/2 overflow-y-auto test-scroll p-8 border-r bg-white">
+                    <div id="content-reading" class="hidden">
+                        <h2 class="text-2xl font-bold mb-4">The Future of Urban Planning</h2>
+                        <p class="mb-4 leading-7 text-gray-700">Urban planning is changing rapidly. As cities grow, the need for sustainable development becomes paramount. Architects and planners are now focusing on "green cities" which prioritize pedestrian spaces over automotive infrastructure. Recent studies show that increasing green spaces improves mental health...</p>
+                        <p class="mb-4 leading-7 text-gray-700">Furthermore, the concept of the "15-minute city" has gained traction. This urban design concept proposes that most daily necessities and services, such as work, shopping, education, healthcare, and leisure can be easily reached by a 15-minute walk or bike ride from any point in the city.</p>
+                        <div class="h-64 bg-gray-100 rounded flex items-center justify-center text-gray-400 mb-4">Chart / Image Placeholder</div>
+                        <p class="mb-4 leading-7 text-gray-700">Critics, however, argue that such transformations require massive infrastructure overhaul and could lead to gentrification if not managed correctly.</p>
+                        <!-- Filler for scroll -->
+                        <div class="space-y-4">
+                             <p class="h-4 bg-gray-100 w-full"></p>
+                             <p class="h-4 bg-gray-100 w-5/6"></p>
+                             <p class="h-4 bg-gray-100 w-4/6"></p>
+                        </div>
+                    </div>
+
+                    <div id="content-writing" class="hidden">
+                        <div class="bg-yellow-50 border border-yellow-200 p-4 rounded mb-6">
+                            <span class="text-xs font-bold text-yellow-800 uppercase mb-1 block">Writing Task 2</span>
+                            <h3 class="font-bold text-gray-900 text-lg">You should spend about 40 minutes on this task.</h3>
+                        </div>
+                        <p class="font-serif text-lg leading-relaxed text-gray-800 mb-6 border-l-4 border-gray-800 pl-4">
+                            Some people believe that the best way to solve environmental problems is to increase the cost of fuel for cars and other vehicles.<br><br>
+                            To what extent do you agree or disagree?
+                        </p>
+                        <p class="text-sm text-gray-500">Give reasons for your answer and include any relevant examples from your own knowledge or experience.<br>Write at least 250 words.</p>
+                    </div>
+
+                    <div id="content-speaking" class="hidden h-full flex flex-col items-center justify-center text-center">
+                        <div class="w-32 h-32 rounded-full bg-blue-50 flex items-center justify-center mb-6 animate-pulse">
+                            <i class="fa-solid fa-microphone text-4xl text-blue-600"></i>
+                        </div>
+                        <h2 class="text-2xl font-bold mb-2">Part 2: Cue Card</h2>
+                        <p class="text-gray-600 mb-6 max-w-md">Describe a book you read recently that you found useful.</p>
+                        <div class="bg-gray-50 p-6 rounded-lg text-left inline-block mb-8 border shadow-sm">
+                            <ul class="list-disc list-inside text-gray-700 space-y-1">
+                                <li>What the book is</li>
+                                <li>Who wrote it</li>
+                                <li>What it is about</li>
+                                <li>And explain why you found it useful</li>
+                            </ul>
+                        </div>
+                        <button class="bg-red-600 text-white px-8 py-3 rounded-full font-bold shadow-lg hover:bg-red-700 flex items-center gap-2">
+                            <div class="w-3 h-3 bg-white rounded-full animate-ping"></div> Start Recording
+                        </button>
+                    </div>
+                </div>
+
+                <!-- RIGHT PANE (Inputs / Questions) -->
+                <div id="pane-right" class="w-1/2 overflow-y-auto test-scroll bg-gray-50 p-8">
+                    
+                    <!-- Writing Text Area -->
+                    <div id="inputs-writing" class="hidden h-full flex flex-col">
+                        <textarea class="flex-grow w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none font-mono text-sm leading-relaxed" placeholder="Start typing your essay here..."></textarea>
+                        <div class="mt-2 flex justify-end text-sm text-gray-600 font-bold">
+                            Word Count: <span class="ml-1 text-blue-600">0</span>
+                        </div>
+                    </div>
+
+                    <!-- Multiple Choice (Reading/Listening) -->
+                    <div id="inputs-standard" class="hidden">
+                        <!-- Question Block -->
+                        <div class="mb-8">
+                            <h3 class="font-bold text-gray-800 mb-4">Questions 1-3</h3>
+                            <p class="text-sm text-gray-500 mb-4">Choose the correct letter, A, B, C or D.</p>
+                            
+                            <div class="space-y-6">
+                                <div class="bg-white p-4 rounded border border-gray-200 shadow-sm" id="q1">
+                                    <p class="font-semibold mb-3"><span class="bg-gray-800 text-white px-2 py-0.5 rounded text-sm mr-2">1</span> What is the main focus of recent urban planning?</p>
+                                    <div class="space-y-2 pl-2">
+                                        <label class="flex items-center gap-3 cursor-pointer"><input type="radio" name="q1" class="h-4 w-4"> <span>Automotive infrastructure</span></label>
+                                        <label class="flex items-center gap-3 cursor-pointer"><input type="radio" name="q1" class="h-4 w-4"> <span>Green cities and pedestrians</span></label>
+                                        <label class="flex items-center gap-3 cursor-pointer"><input type="radio" name="q1" class="h-4 w-4"> <span>Industrial expansion</span></label>
+                                    </div>
+                                </div>
+
+                                <div class="bg-white p-4 rounded border border-gray-200 shadow-sm" id="q2">
+                                    <p class="font-semibold mb-3"><span class="bg-gray-800 text-white px-2 py-0.5 rounded text-sm mr-2">2</span> What is a "15-minute city"?</p>
+                                    <div class="space-y-2 pl-2">
+                                        <label class="flex items-center gap-3 cursor-pointer"><input type="radio" name="q2" class="h-4 w-4"> <span>A city you can drive across in 15 mins</span></label>
+                                        <label class="flex items-center gap-3 cursor-pointer"><input type="radio" name="q2" class="h-4 w-4"> <span>A city with 15-minute speed limits</span></label>
+                                        <label class="flex items-center gap-3 cursor-pointer"><input type="radio" name="q2" class="h-4 w-4"> <span>Accessing needs within a 15-min walk/ride</span></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Fill in the blanks Block -->
+                        <div class="mb-8">
+                            <h3 class="font-bold text-gray-800 mb-4">Questions 3-5</h3>
+                            <p class="text-sm text-gray-500 mb-4">Complete the summary using NO MORE THAN TWO WORDS.</p>
+                            <div class="bg-white p-6 rounded border border-gray-200 shadow-sm leading-8 text-gray-800">
+                                Critics argue that changes might lead to <input type="text" class="border-b-2 border-gray-400 w-32 focus:outline-none focus:border-blue-600 px-1 text-center font-bold text-blue-700"> (3) if not managed well.
+                                Furthermore, the infrastructure requires a <input type="text" class="border-b-2 border-gray-400 w-32 focus:outline-none focus:border-blue-600 px-1 text-center font-bold text-blue-700"> (4) overhaul.
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Exam Footer (Navigation) -->
+            <footer class="h-16 bg-gray-800 text-white flex items-center px-4 justify-between flex-shrink-0">
+                <div class="flex items-center gap-2 overflow-x-auto scrollbar-hide max-w-3xl">
+                    <span class="text-xs uppercase text-gray-400 font-bold mr-2">Review:</span>
+                    <button class="q-btn w-8 h-8 rounded border border-gray-600 text-sm hover:bg-gray-700 flex items-center justify-center active">1</button>
+                    <button class="q-btn w-8 h-8 rounded border border-gray-600 text-sm hover:bg-gray-700 flex items-center justify-center answered">2</button>
+                    <button class="q-btn w-8 h-8 rounded border border-gray-600 text-sm hover:bg-gray-700 flex items-center justify-center flagged">3</button>
+                    <button class="q-btn w-8 h-8 rounded border border-gray-600 text-sm hover:bg-gray-700 flex items-center justify-center">4</button>
+                </div>
+                <div class="flex gap-4">
+                     <button class="text-gray-400 hover:text-white"><i class="fa-solid fa-chevron-left"></i></button>
+                     <button class="text-gray-400 hover:text-white"><i class="fa-solid fa-chevron-right"></i></button>
+                </div>
+            </footer>
+        </div>
+
+{% endblock %}
