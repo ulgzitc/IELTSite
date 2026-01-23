@@ -1,14 +1,21 @@
 from django.views.generic import TemplateView
 
 
-class TestView(TemplateView):
+class HomeView(TemplateView):
     template_name = "index.html"
 
-class Test1(TemplateView):
-    template_name = "index2.html"
 
-class Test2(TemplateView):
-    template_name = "index3.html"
+class TestsList(TemplateView):
+    pass
 
-class Test3(TemplateView):
+
+class TakeTest(TemplateView):
+    pass
+
+
+class ResultsView(TemplateView):
+    pass
+
+
+class AccountView(TemplateView):
     pass
