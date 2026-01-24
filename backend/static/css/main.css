@@ -1,0 +1,21 @@
+body { font-family: 'Noto Sans', sans-serif; }
+
+/* Custom Scrollbar for Test Interface */
+.test-scroll::-webkit-scrollbar { width: 8px; }
+.test-scroll::-webkit-scrollbar-track { background: #f1f1f1; }
+.test-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+.test-scroll::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+/* Dropdown Animation */
+.group:hover .group-hover\:block { display: block; animation: fadeIn 0.2s ease-out; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+/* Exam States */
+.q-btn.active { background-color: #1d4ed8; color: white; border-color: #1d4ed8; }
+.q-btn.answered { background-color: #dbeafe; color: #1e40af; border-color: #1e40af; font-weight: bold; }
+.q-btn.flagged { border-color: #f59e0b; color: #f59e0b; position: relative; }
+.q-btn.flagged::after { content: ''; position: absolute; top: 2px; right: 2px; width: 6px; height: 6px; background: #f59e0b; border-radius: 50%; }
+/* Progress Circle (CSS only) */
+.progress-circle {
+    width: 100px; height: 100px; border-radius: 50%;
+    background: radial-gradient(closest-side, white 79%, transparent 80% 100%),
+    conic-gradient(#3b82f6 75%, #e5e7eb 0);
+}

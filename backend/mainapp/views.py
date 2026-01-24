@@ -6,16 +6,16 @@ class HomeView(TemplateView):
 
 
 class TestsList(TemplateView):
-    pass
+    template_name = "test_list.html"
 
 
 class TakeTest(TemplateView):
-    pass
+    template_name = 'take_test.html'
 
 
 class ResultsView(TemplateView):
-    pass
+    template_name = 'results.html'
 
 
-class AccountView(TemplateView):
-    pass
+class ProfileView(TemplateView):
+    template_name = 'profile.html'
