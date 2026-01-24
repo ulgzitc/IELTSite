@@ -2,12 +2,7 @@
 {% load static %}
 
 {% block content %}
-
-
-        <!-- 
-            4. RESULTS VIEW (results.html)
-        -->
-        <div id="view-result" class="page-view hidden py-10">
+        <div id="view-result" class="view-section hidden py-10">
             <div class="max-w-5xl mx-auto px-4">
                 <div class="bg-white rounded-xl shadow-lg overflow-hidden mb-8">
                     <div class="bg-gradient-to-r from-blue-800 to-blue-600 p-8 text-white flex flex-col md:flex-row items-center justify-between">
@@ -39,7 +34,6 @@
                             <div class="bg-gray-50 rounded p-6 border flex flex-col items-center justify-center h-64">
                                 <div class="text-gray-400 mb-2"><i class="fa-solid fa-chart-pie text-4xl"></i></div>
                                 <p class="text-gray-500 text-sm">Question Type Analysis Chart</p>
-                                <p class="text-xs text-gray-400 mt-1">(Multiple Choice: 80%, Fill-ups: 60%)</p>
                             </div>
                             
                             <!-- Advice -->
@@ -54,10 +48,6 @@
                                         <i class="fa-solid fa-circle-exclamation text-yellow-500 mt-1"></i>
                                         <span class="text-sm text-gray-600">Work on "True/False/Not Given". You missed 4 questions in this category.</span>
                                     </li>
-                                    <li class="flex items-start gap-3">
-                                        <i class="fa-solid fa-clock text-blue-500 mt-1"></i>
-                                        <span class="text-sm text-gray-600">Your pacing was good, finishing with 5 minutes to spare.</span>
-                                    </li>
                                 </ul>
                                 <button class="mt-6 text-blue-600 font-bold text-sm hover:underline">View Detailed Answer Key &rarr;</button>
                             </div>
@@ -66,10 +56,11 @@
                 </div>
 
                 <div class="flex justify-between">
-                    <button onclick="app.router.navigate('list', 'reading')" class="text-gray-600 font-semibold hover:text-gray-900">&larr; Back to Library</button>
-                    <button onclick="app.router.navigate('exam')" class="bg-blue-600 text-white px-6 py-2 rounded shadow hover:bg-blue-700 transition">Retake Test</button>
+                    <button onclick="showView('list')" class="text-gray-600 font-semibold hover:text-gray-900">&larr; Back to Library</button>
+                    <button onclick="showView('exam')" class="bg-blue-600 text-white px-6 py-2 rounded shadow hover:bg-blue-700 transition">Retake Test</button>
                 </div>
             </div>
         </div>
+
 
 {% endblock %}

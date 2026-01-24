@@ -3,14 +3,10 @@
 
 {% block content %}
 
-        <!-- 
-            2. TESTS LIST VIEW (test_list.html) 
-            Dynamic Template: This will loop through DB objects in Django
-        -->
-        <div id="view-list" class="page-view hidden">
+        <div id="view-list" class="view-section hidden">
             <div class="bg-blue-800 text-white py-12">
                 <div class="max-w-7xl mx-auto px-4">
-                    <h1 id="list-title" class="text-3xl font-bold capitalize">Reading Tests</h1>
+                    <h1 class="text-3xl font-bold capitalize">Mock Test Library</h1>
                     <p class="opacity-80 mt-2">Browse our extensive library of Cambridge and Recent Actual Tests.</p>
                 </div>
             </div>
@@ -45,9 +41,70 @@
 
                 <!-- Tests Grid -->
                 <div class="flex-grow">
-                    <!-- Django For Loop Here -->
-                    <div id="test-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                        <!-- This content is populated by JS for demo, but represents django objects -->
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                        
+                        <!-- 
+                            DJANGO TEMPLATE LOOP EXAMPLE:
+                            {% for test in tests %}
+                        -->
+
+                        <!-- STATIC ITEM 1: READING TEST EXAMPLE -->
+                        <div class="bg-white rounded-lg shadow-sm hover:shadow-md transition border border-gray-100 flex flex-col">
+                            <div class="p-6 flex-grow">
+                                <div class="flex justify-between items-start mb-4">
+                                    <span class="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded font-bold uppercase">Reading</span>
+                                    <span class="text-gray-400 text-xs"><i class="fa-regular fa-clock"></i> 60m</span>
+                                </div>
+                                <h3 class="font-bold text-gray-800 text-lg mb-2">Cambridge 19 - Test 1</h3>
+                                <p class="text-gray-500 text-sm">Academic reading with split screen interface.</p>
+                            </div>
+                            <div class="p-4 border-t border-gray-50 bg-gray-50 rounded-b-lg">
+                                <!-- In Django: href="{% url 'take_test' test.id %}" -->
+                                <button onclick="showView('exam')" class="w-full bg-white border border-blue-500 text-blue-600 font-bold py-2 rounded hover:bg-blue-50 transition">
+                                    Take Test
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- STATIC ITEM 2: LISTENING TEST EXAMPLE -->
+                        <div class="bg-white rounded-lg shadow-sm hover:shadow-md transition border border-gray-100 flex flex-col">
+                            <div class="p-6 flex-grow">
+                                <div class="flex justify-between items-start mb-4">
+                                    <span class="px-2 py-1 bg-red-100 text-red-800 text-xs rounded font-bold uppercase">Listening</span>
+                                    <span class="text-gray-400 text-xs"><i class="fa-regular fa-clock"></i> 30m</span>
+                                </div>
+                                <h3 class="font-bold text-gray-800 text-lg mb-2">Cambridge 19 - Test 2</h3>
+                                <p class="text-gray-500 text-sm">Recent actual listening test with audio.</p>
+                            </div>
+                            <div class="p-4 border-t border-gray-50 bg-gray-50 rounded-b-lg">
+                                <button onclick="showView('exam')" class="w-full bg-white border border-red-500 text-red-600 font-bold py-2 rounded hover:bg-red-50 transition">
+                                    Take Test
+                                </button>
+                            </div>
+                        </div>
+
+                         <!-- STATIC ITEM 3: WRITING TEST EXAMPLE -->
+                         <div class="bg-white rounded-lg shadow-sm hover:shadow-md transition border border-gray-100 flex flex-col">
+                            <div class="p-6 flex-grow">
+                                <div class="flex justify-between items-start mb-4">
+                                    <span class="px-2 py-1 bg-yellow-100 text-yellow-800 text-xs rounded font-bold uppercase">Writing</span>
+                                    <span class="text-gray-400 text-xs"><i class="fa-regular fa-clock"></i> 40m</span>
+                                </div>
+                                <h3 class="font-bold text-gray-800 text-lg mb-2">Task 2: Education</h3>
+                                <p class="text-gray-500 text-sm">Essay writing simulation with word count.</p>
+                            </div>
+                            <div class="p-4 border-t border-gray-50 bg-gray-50 rounded-b-lg">
+                                <button onclick="showView('exam')" class="w-full bg-white border border-yellow-500 text-yellow-600 font-bold py-2 rounded hover:bg-yellow-50 transition">
+                                    Take Test
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- 
+                            {% endfor %}
+                        -->
+
                     </div>
                     
                     <!-- Pagination Mock -->
@@ -55,7 +112,6 @@
                         <button class="px-3 py-1 border rounded hover:bg-gray-50">Previous</button>
                         <button class="px-3 py-1 border rounded bg-blue-600 text-white">1</button>
                         <button class="px-3 py-1 border rounded hover:bg-gray-50">2</button>
-                        <button class="px-3 py-1 border rounded hover:bg-gray-50">3</button>
                         <button class="px-3 py-1 border rounded hover:bg-gray-50">Next</button>
                     </div>
                 </div>
