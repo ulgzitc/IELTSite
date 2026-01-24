@@ -1,11 +1,12 @@
+from django.views import View
 from django.views.generic import TemplateView
-
+from django.views.generic import ListView
 
 class HomeView(TemplateView):
     template_name = "index.html"
 
 
-class TestsList(TemplateView):
+class TestList(TemplateView):
     template_name = "test_list.html"
 
 
