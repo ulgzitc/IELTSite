@@ -2,7 +2,8 @@
 {% load static %}
 
 {% block content %}
-        <div id="view-result" class="view-section hidden py-10">
+
+        <div id="view-result" class="view-section py-10"><!--hidden-->
             <div class="max-w-5xl mx-auto px-4">
                 <div class="bg-white rounded-xl shadow-lg overflow-hidden mb-8">
                     <div class="bg-gradient-to-r from-blue-800 to-blue-600 p-8 text-white flex flex-col md:flex-row items-center justify-between">
@@ -56,8 +57,8 @@
                 </div>
 
                 <div class="flex justify-between">
-                    <button onclick="showView('list')" class="text-gray-600 font-semibold hover:text-gray-900">&larr; Back to Library</button>
-                    <button onclick="showView('exam')" class="bg-blue-600 text-white px-6 py-2 rounded shadow hover:bg-blue-700 transition">Retake Test</button>
+                    <button class="text-gray-600 font-semibold hover:text-gray-900">&larr; Back to Library</button>
+                    <button class="bg-blue-600 text-white px-6 py-2 rounded shadow hover:bg-blue-700 transition">Retake Test</button>
                 </div>
             </div>
         </div>
