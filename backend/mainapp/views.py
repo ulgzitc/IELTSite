@@ -1,6 +1,9 @@
 from django.views import View
 from django.views.generic import TemplateView
 from django.views.generic import ListView
+from django.views.generic.detail import DetailView
+
+from .models import *
 
 class HomeView(TemplateView):
     template_name = "index.html"
@@ -20,3 +23,11 @@ class ResultsView(TemplateView):
 
 class ProfileView(TemplateView):
     template_name = 'profile.html'
+
+
+
+
+class TestVew(TemplateView):
+    model = Test
+    context_object_name = "questions"
+    template_name = 'test.html'

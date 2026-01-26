@@ -8,5 +8,6 @@ urlpatterns = [
     path('taketest/', TakeTest.as_view(), name='taketest'),
     path('results/', ResultsView.as_view(), name='testresults'),
     path('account/', ProfileView.as_view(), name='profile'),
+    path('test', TestVew.as_view(), name='test'),
 ]
 
