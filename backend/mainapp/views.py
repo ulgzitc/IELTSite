@@ -5,29 +5,7 @@ from django.views.generic.detail import DetailView
 
 from .models import *
 
-class HomeView(TemplateView):
-    template_name = "index.html"
-
-
-class TestList(TemplateView):
-    template_name = "test_list.html"
-
-
-class TakeTest(TemplateView):
-    template_name = 'take_test.html'
-
-
-class ResultsView(TemplateView):
-    template_name = 'results.html'
-
-
-class ProfileView(TemplateView):
-    template_name = 'profile.html'
-
-
-
-
-class TestVew(TemplateView):
+class Test(ListView):
     model = Test
-    context_object_name = "questions"
     template_name = 'test.html'
+    context_object_name = "objects"
