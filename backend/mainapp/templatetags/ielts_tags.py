@@ -38,15 +38,28 @@ def radios(text):
     return mark_safe(processed)
 
 
+
 @register.filter(name="radios2")
-def radios2(text):
+def radios2(text, arg):
     pattern = r'\{\{(.+?)\}\}'
+    title = arg
 
     def replace_text(match):
-        return match.group(1)
+        question_text = match.group(1)
+        
+        ret = f'''
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="{title}" id="{question_text}">
+              <label class="form-check-label" for="{question_text}">{question_text}</label>
+            </div>
+            '''
+        
+        return ret
     
     processed = re.sub(pattern, replace_text, text)
     return mark_safe(processed)
+
+
 
 
 @register.filter(name='count')
