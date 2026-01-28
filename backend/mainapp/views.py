@@ -5,3 +5,7 @@ from django.views.generic.detail import DetailView
 
 from .models import *
 
+class Test(ListView):
+    model = Test
+    template_name = 'test.html'
+    context_object_name = "objects"
