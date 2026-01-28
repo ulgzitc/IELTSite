@@ -6,7 +6,7 @@
         <p>{{ object.text|inline }}</p>
     {% elif object.qtype == "radios" %}
         <h3>{{ object.title }}</h3>
-        <p>{{ object.text|radios2:forloop.counter }}</p>
+        <p>{{ object.text|radios:forloop.counter }}</p>
     {% endif %}
 {% endfor %}
 
