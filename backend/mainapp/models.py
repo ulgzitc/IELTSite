@@ -5,6 +5,7 @@ class Test(models.Model):
     CHOICE_TYPES = {
         'radios' : "Radios",
         'inline' : "Inline",
+        'inline_tab' : "Inline Tab",
     }
 
     title = models.CharField()

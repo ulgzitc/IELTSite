@@ -1,11 +1,12 @@
 {% load ielts_tags %}
 
 {% for object in objects %}
+    <h2>{{ object.title }}</h2>
     {% if object.qtype == "inline" %}
-        <h3>{{ object.title }}</h3>
         <p>{{ object.text|inline }}</p>
     {% elif object.qtype == "radios" %}
-        <h3>{{ object.title }}</h3>
         <p>{{ object.text|radios:forloop.counter }}</p>
+    {% elif object.qtype == "inline_tab" %}
+        {{ object.text|inline_tab }}
     {% endif %}
 {% endfor %}
