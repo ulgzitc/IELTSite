@@ -1,5 +1,34 @@
 {% load ielts_tags %}
 
 {% for object in objects %}
-    <p>{{ object.text|render_gap_fill }}</p>
+    {% if object.qtype == "inline" %}
+        <h3>{{ object.title }}</h3>
+        <p>{{ object.text|inline }}</p>
+    {% elif object.qtype == "radios" %}
+        <h3>{{ object.title }}</h3>
+        <p>{{ object.text|radios }}</p>
+    {% endif %}
 {% endfor %}
+
+
+
+
+
+<br><br><br>
+Default
+
+<!--RADIOS-->
+<section>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault1">
+  <label class="form-check-label" for="radioDefault1">
+    Default radio
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault2">
+  <label class="form-check-label" for="radioDefault2">
+    Default checked radio
+  </label>
+</div>
+</section>
