@@ -18,52 +18,20 @@ def inline(text):
     return mark_safe(processed_text)
 
 
+
 @register.filter(name="radios")
-def radios(text):
+def radios(text, arg):
     pattern = r'\{\{(.+?)\}\}'
 
     def replace_text(match):
         question_text = match.group(1)
-        
         ret = f'''
             <div class="form-check">
-              <input class="form-check-input" type="radio" name="radioDefault" id="{question_text}">
+              <input class="form-check-input" type="radio" name="{arg}" id="{question_text}">
               <label class="form-check-label" for="{question_text}">{question_text}</label>
             </div>
             '''
-        
         return ret
     
     processed = re.sub(pattern, replace_text, text)
     return mark_safe(processed)
-
-
-
-@register.filter(name="radios2")
-def radios2(text, arg):
-    pattern = r'\{\{(.+?)\}\}'
-    title = arg
-
-    def replace_text(match):
-        question_text = match.group(1)
-        
-        ret = f'''
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="{title}" id="{question_text}">
-              <label class="form-check-label" for="{question_text}">{question_text}</label>
-            </div>
-            '''
-        
-        return ret
-    
-    processed = re.sub(pattern, replace_text, text)
-    return mark_safe(processed)
-
-
-
-
-@register.filter(name='count')
-def count(text):
-    pattern = r'\{\{(.+?)\}\}'
-    n = len(re.findall(pattern, text, re.IGNORECASE))
-    return range(n)
