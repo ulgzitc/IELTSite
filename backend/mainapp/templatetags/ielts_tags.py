@@ -27,8 +27,8 @@ def radios(text, arg):
         question_text = match.group(1)
         ret = f'''
             <div class="form-check">
-              <input class="form-check-input" type="radio" name="{arg}" id="{question_text}">
-              <label class="form-check-label" for="{question_text}">{question_text}</label>
+              <input class="form-check-input-radios" type="radio" name="{arg}" id="{question_text}">
+              <label class="form-check-label-radios" for="{question_text}">{question_text}</label>
             </div>
             '''
         return ret
@@ -55,4 +55,23 @@ def inline_tab(text):
         return ret
     
     processed = re.sub(pattern, rep_inline_tab, text)
+    return mark_safe(processed)
+
+
+
+@register.filter(name="checkbox")   #multiple choice questions
+def checkbox(text, arg):
+    pattern = r'\{\{(.+?)\}\}'
+
+    def rep_checkbox(match):
+        question_text = match.group(1)
+        ret = f'''
+            <div class="form-check">
+              <input class="form-check-input-checkbox" type="checkbox" name="{arg}" id="{question_text}">
+              <label class="form-check-label-checkbox" for="{question_text}">{question_text}</label>
+            </div>
+            '''
+        return ret
+    
+    processed = re.sub(pattern, rep_checkbox, text)
     return mark_safe(processed)

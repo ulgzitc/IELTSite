@@ -6,6 +6,7 @@ class Test(models.Model):
         'radios' : "Radios",
         'inline' : "Inline",
         'inline_tab' : "Inline Tab",
+        'checkbox' : "Checkbox",
     }
 
     title = models.CharField()

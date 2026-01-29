@@ -8,5 +8,33 @@
         <p>{{ object.text|radios:forloop.counter }}</p>
     {% elif object.qtype == "inline_tab" %}
         {{ object.text|inline_tab }}
+    {% elif object.qtype == "checkbox" %}
+        {{ object.text|checkbox:forloop.counter }}
     {% endif %}
 {% endfor %}
+
+
+
+
+
+
+
+
+
+<!-- Very bold and minimal limit function for checkbox -->
+<script>
+    var checks = document.querySelectorAll(".form-check-input-checkbox");
+    var max = 2;
+
+    for (var i = 0; i < checks.length; i++) {
+        checks[i].onclick = selectiveCheck;
+    }
+
+    function selectiveCheck(event) {
+        var checkedChecks = document.querySelectorAll(".form-check-input-checkbox:checked");
+        if (checkedChecks.length > max) {
+            alert("You can only select a maximum of " + max + " options.");
+            this.checked = false; // Uncheck the last selected box
+        }
+    }
+</script>
