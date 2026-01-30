@@ -12,7 +12,7 @@ def inline(text):
 
     def rep_inline(match):
         question_id = match.group(1)
-        ret  = '<input type="text" name="question_{question_id}" class="inline-input border-b-2 border-gray-400 bg-gray-50 text-center w-32 focus:outline-none focus:border-blue-600" autocomplete="off">'
+        ret  = f'<input type="text" name="question_{question_id}" placeholder={question_id} class="inline-input border-b-2 border-gray-400 bg-gray-50 text-center w-32 focus:outline-none focus:border-blue-600" autocomplete="off">'
         return ret
 
     processed_text = re.sub(pattern, rep_inline, text)
@@ -125,9 +125,49 @@ def grid(jdata):
 
 
 
-
-
 #Tabular
 @register.filter(name="tabular")
-def tabular(text):
-    return "template-tag tabular"
+def tabular(jdata):
+    data = dict(jdata)
+    cols = data["cols"]
+    rows = data["rows"]
+    content = data["content"]
+    
+    pattern = r'\{\{(\d+)\}\}'
+    def rep_inline(match):
+        question_id = match.group(1)
+        ret  = f'<input type="text" name="question_{question_id}" placeholder={question_id} class="inline-input border-b-2 border-gray-400 bg-gray-50 text-center w-32 focus:outline-none focus:border-blue-600" autocomplete="off">'
+        return ret
+
+    def col_str(incols):
+        columns_str = ""
+        for col in incols:
+            columns_str += f"<th>{col}</th>"
+        return mark_safe(columns_str)
+
+
+    def row_col_in(inrows, incontent):
+        rowshit = ""
+        for idx, inr in enumerate(inrows):
+            rowshit += "<tr>"
+            row_first = f'<td>{inr}</td>'
+            rowshit += row_first
+            for con in incontent[idx]:
+                col_list = f'<td>{re.sub(pattern, rep_inline, con)}</td>'
+                rowshit += col_list
+            rowshit += "</tr>"
+        return mark_safe(rowshit)
+
+    html = f'''
+        <table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%;">
+            <thead>
+                <tr>
+                    {col_str(cols)}
+                </tr>
+            </thead>
+            <tbody>
+                {row_col_in(rows, content)}
+            </tbody>
+        </table>'''
+
+    return mark_safe(html)

@@ -11,7 +11,7 @@
     {% elif object.qtype == "checkbox" %}
         {{ object.text|checkbox:forloop.counter }}
     {% elif object.qtype == "tabular" %}
-        {{ object.text|tabular }}
+        {{ object.jsondata|tabular }}
     {% elif object.qtype == "grid" %}
         {{ object.jsondata|grid }}
     {% endif %}
@@ -44,4 +44,7 @@
 </script>
 
 <br><br>
+
+
+
 
