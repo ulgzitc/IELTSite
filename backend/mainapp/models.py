@@ -7,7 +7,7 @@ class Test(models.Model):
         'inline' : "Inline",
         'inline_tab' : "Inline Tab",
         'checkbox' : "Checkbox",
-        'tabular' : "Tabular",
+        'tabular' : "Tabular (JSON)",
         'grid' : "Grid (JSON)",
     }
 
