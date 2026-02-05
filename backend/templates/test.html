@@ -14,6 +14,8 @@
         {{ object.jsondata|tabular }}
     {% elif object.qtype == "grid" %}
         {{ object.jsondata|grid }}
+    {% elif object.qtype == "assign" %}
+        {{ object.jsondata|assign }}
     {% endif %}
 {% endfor %}
 
@@ -47,4 +49,4 @@
 
 
 
-
+<br><br>

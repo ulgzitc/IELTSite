@@ -60,7 +60,7 @@ def inline_tab(text):
 
 
 #Checkbox
-@register.filter(name="checkbox")   #multiple choice questions
+@register.filter(name="checkbox")
 def checkbox(text, arg):
     pattern = r'\{\{(.+?)\}\}'
 
@@ -76,7 +76,6 @@ def checkbox(text, arg):
     
     processed = re.sub(pattern, rep_checkbox, text)
     return mark_safe(processed)
-
 
 
 #Grid
@@ -121,8 +120,6 @@ def grid(jdata):
         </table>'''
 
     return mark_safe(html)
-
-
 
 
 #Tabular
@@ -171,3 +168,65 @@ def tabular(jdata):
         </table>'''
 
     return mark_safe(html)
+
+
+#Assign
+@register.filter(name='assign')
+def assign(jdata):
+    data = dict(jdata)
+    tldr = data['tldr']
+    option_char = data['option_char']
+    option_lett = data['option_lett']
+    op = data['op']
+    answers = data['answers']
+    a = int(data['question_ids'][0])
+    b = int(data['question_ids'][1]) + 1
+    question_ids = range(a, b)
+
+    def intldr(option_char, option_lett):
+        ret = ""
+        for char, lett in zip(option_char, option_lett):
+            ret += f"<li><strong>{char}</strong>&nbsp;&nbsp;{lett}</li>"
+        return ret
+
+
+    def inop(answers):
+        ret = ""
+        for idx, asnwer in zip(question_ids, answers):
+            ret += f'''
+            <tr>
+                <td>{asnwer}</td>
+                <td>
+                    <input placeholder="{idx}" type="text" name="q17" maxlength="1" size="1"
+                           style="text-transform: uppercase; text-align: center;">
+                </td>
+            </tr>'''
+        return ret
+
+
+    html = f'''
+        <form method="post">
+
+            <div style="border: 2px solid #a855f7; border-radius: 10px; padding: 20px; margin-bottom: 30px;">
+                <h3 style="text-align: center; color: #7e22ce; margin-top: 0;">
+                    {tldr}
+                </h3>
+
+                <ul style="list-style: none; padding-left: 0; margin: 0;">
+                    {intldr(option_char, option_lett)}
+                </ul>
+            </div>
+
+
+            <h4 style="color: #7e22ce; margin-bottom: 10px;">{op}</h4>
+
+            <table cellpadding="6" cellspacing="0">
+                <tbody>
+                    {inop(answers)}
+                </tbody>
+            </table>
+
+        </form>
+        '''
+    return mark_safe(html)
+

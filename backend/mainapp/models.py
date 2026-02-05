@@ -9,6 +9,7 @@ class Test(models.Model):
         'checkbox' : "Checkbox",
         'tabular' : "Tabular (JSON)",
         'grid' : "Grid (JSON)",
+        'assign' : "Assign (JSON)",
     }
 
     title = models.CharField(null=True, blank=True)
