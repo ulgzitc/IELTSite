@@ -1,0 +1,55 @@
+body {
+    font-family: system-ui, sans-serif;
+    background: #fafafa;
+    color: #111;
+}
+h3 {
+    color: #7e22ce;
+    margin-bottom: 12px;
+}
+.container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    max-width: 900px;
+    margin: 40px auto;
+}
+.trend {
+    padding: 8px 0;
+    border-bottom: 1px solid #e5e7eb;
+}
+.trend-title {
+    font-size: 14px;
+    margin-bottom: 6px;
+}
+.dropzone {
+    min-height: 32px;
+    border: 1px dashed #d1d5db;
+    border-radius: 4px;
+    padding: 4px;
+    transition: background 0.15s, border-color 0.15s;
+}
+.dropzone.over {
+    border-color: #7e22ce;
+    background: #f3e8ff;
+}
+.opinion {
+    font-size: 14px;
+    padding: 6px 8px;
+    border: 1px solid #c084fc;
+    border-radius: 4px;
+    background: #faf5ff;
+    cursor: grab;
+    margin-bottom: 6px;
+    user-select: none;
+}
+.opinions {
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    padding: 12px;
+    min-height: 200px;
+}
+.opinions.over {
+    background: #f9fafb;
+    border-color: #7e22ce;
+}

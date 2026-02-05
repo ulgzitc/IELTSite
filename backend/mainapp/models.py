@@ -6,14 +6,19 @@ class Test(models.Model):
         'radios' : "Radios",
         'inline' : "Inline",
         'inline_tab' : "Inline Tab",
+        'checkbox' : "Checkbox",
+        'tabular' : "Tabular (JSON)",
+        'grid' : "Grid (JSON)",
+        'assign' : "Assign (JSON)",
+        'draganddrop' : "Drag-and-Drop (JSON)",
     }
 
-    title = models.CharField()
-    text = models.TextField()
+    title = models.CharField(null=True, blank=True)
+    text = models.TextField(null=True, blank=True)
+    jsondata = models.JSONField(default=dict, null=True, blank=True)
     qtype = models.CharField(choices=CHOICE_TYPES)
 
 
     def __str__(self):
         return self.title
 
-    

@@ -1,12 +1,36 @@
 {% load ielts_tags %}
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'css/draganddrop.css' %}">
+
 
 {% for object in objects %}
     <h2>{{ object.title }}</h2>
     {% if object.qtype == "inline" %}
-        <p>{{ object.text|inline }}</p>
+        {{ object.text|inline }}
     {% elif object.qtype == "radios" %}
-        <p>{{ object.text|radios:forloop.counter }}</p>
+        {{ object.text|radios:forloop.counter }}
     {% elif object.qtype == "inline_tab" %}
         {{ object.text|inline_tab }}
+    {% elif object.qtype == "checkbox" %}
+        {{ object.text|checkbox:forloop.counter }}
+    {% elif object.qtype == "tabular" %}
+        {{ object.jsondata|tabular }}
+    {% elif object.qtype == "grid" %}
+        {{ object.jsondata|grid }}
+    {% elif object.qtype == "assign" %}
+        {{ object.jsondata|assign }}
+    {% elif object.qtype == "draganddrop" %}
+        {{ object.jsondata|draganddrop }}
     {% endif %}
 {% endfor %}
+<script src="{% static 'js/checkbox.js' %}"></script>
+<br><br>
+
+
+
+<script src="{% static 'js/draganddrop.js' %}"></script>
+
+
+<br><br>
+
