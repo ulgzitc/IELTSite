@@ -242,13 +242,13 @@ def draganddrop(jdata):
     b = int(data['question_ids'][1]) + 1
     question_ids = range(a, b)
 
-    def fieldy(question_ids, fields):
+    def fieldy(fields):
         ret = ""
-        for idx, field in zip(question_ids, fields):
+        for field in fields:
             ret += f'''
                 <div class="trend" data-question="26">
                     <div class="trend-title">{field}</div>
-                    <div class="dropzone" placeholder={idx}></div>
+                    <div class="dropzone"></div>
                 </div>'''
         return ret
 
@@ -268,7 +268,7 @@ def draganddrop(jdata):
 
             <div>
                 <h3>{section1}</h3>
-                {fieldy(question_ids, fields)}
+                {fieldy(fields)}
             </div>
 
             <div>
