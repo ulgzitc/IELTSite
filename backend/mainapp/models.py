@@ -10,6 +10,7 @@ class Test(models.Model):
         'tabular' : "Tabular (JSON)",
         'grid' : "Grid (JSON)",
         'assign' : "Assign (JSON)",
+        'draganddrop' : "Drag-and-Drop (JSON)",
     }
 
     title = models.CharField(null=True, blank=True)

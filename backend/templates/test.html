@@ -1,4 +1,8 @@
 {% load ielts_tags %}
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'css/draganddrop.css' %}">
+
 
 {% for object in objects %}
     <h2>{{ object.title }}</h2>
@@ -16,37 +20,17 @@
         {{ object.jsondata|grid }}
     {% elif object.qtype == "assign" %}
         {{ object.jsondata|assign }}
+    {% elif object.qtype == "draganddrop" %}
+        {{ object.jsondata|draganddrop }}
     {% endif %}
 {% endfor %}
-
-
-
-
-
-
-
-
-
-<!-- Very bold and minimal limit function for checkbox -->
-<script>
-    var checks = document.querySelectorAll(".form-check-input-checkbox");
-    var max = 2;
-
-    for (var i = 0; i < checks.length; i++) {
-        checks[i].onclick = selectiveCheck;
-    }
-
-    function selectiveCheck(event) {
-        var checkedChecks = document.querySelectorAll(".form-check-input-checkbox:checked");
-        if (checkedChecks.length > max) {
-            alert("You can only select a maximum of " + max + " options.");
-            this.checked = false;
-        }
-    }
-</script>
-
+<script src="{% static 'js/checkbox.js' %}"></script>
 <br><br>
 
 
 
+<script src="{% static 'js/draganddrop.js' %}"></script>
+
+
 <br><br>
+

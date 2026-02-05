@@ -230,3 +230,58 @@ def assign(jdata):
         '''
     return mark_safe(html)
 
+
+@register.filter(name="draganddrop")
+def draganddrop(jdata):
+    data = dict(jdata)
+    section1 = data['section1']
+    section2 = data['section2']
+    fields = data['fields']
+    options = data['options']
+    a = int(data['question_ids'][0])
+    b = int(data['question_ids'][1]) + 1
+    question_ids = range(a, b)
+
+    def fieldy(question_ids, fields):
+        ret = ""
+        for idx, field in zip(question_ids, fields):
+            ret += f'''
+                <div class="trend" data-question="26">
+                    <div class="trend-title">{field}</div>
+                    <div class="dropzone" placeholder={idx}></div>
+                </div>'''
+        return ret
+
+    def opit(options):
+        ret = ""
+        for option in options:
+            ret += f'''
+            <div class="opinion" draggable="true" data-value="A">
+                {option}
+            </div>'''
+        return ret
+
+
+    html = f'''
+        <form method="post">
+        <div class="container">
+
+            <div>
+                <h3>{section1}</h3>
+                {fieldy(question_ids, fields)}
+            </div>
+
+            <div>
+                <h3>{section2}</h3>
+                <div class="opinions" id="opinions-zone">
+                    {opit(options)}
+                </div>
+            </div>
+
+        </div>
+        </form>
+        '''
+
+    return mark_safe(html)
+
+
