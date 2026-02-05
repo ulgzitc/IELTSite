@@ -176,7 +176,7 @@ def assign(jdata):
     data = dict(jdata)
     tldr = data['tldr']
     option_char = data['option_char']
-    option_lett = data['option_lett']
+    option_lett = data['option_w']
     op = data['op']
     answers = data['answers']
     a = int(data['question_ids'][0])
