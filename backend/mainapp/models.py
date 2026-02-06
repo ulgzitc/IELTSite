@@ -5,6 +5,7 @@ class Test(models.Model):
     CHOICE_TYPES = {
         'radios' : "Radios",
         'inline' : "Inline",
+        'inline_list' : "Inline List",
         'inline_tab' : "Inline Tab",
         'checkbox' : "Checkbox",
         'tabular' : "Tabular (JSON)",

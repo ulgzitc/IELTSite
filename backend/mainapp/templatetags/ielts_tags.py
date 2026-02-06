@@ -5,6 +5,7 @@ import json
 
 register = template.Library()
 
+"""
 #Inline
 @register.filter(name="inline")
 def inline(text):
@@ -17,6 +18,52 @@ def inline(text):
 
     processed_text = re.sub(pattern, rep_inline, text)
     return mark_safe(processed_text)
+"""
+#Inline
+@register.filter(name="inline")
+def inline(jdata):
+    data = dict(jdata)
+    text = data['text']
+    #a = int(data['question_ids'][0])
+    #b = int(data['question_ids'][1]) + 1
+    #question_ids = range(a, b)
+
+    pattern = r'\{\{(\d+)\}\}'
+
+    def rep_inline(match):
+        question_id = match.group(1)
+        ret  = f'<input type="text" name="question_{question_id}" placeholder={question_id} class="inline-input border-b-2 border-gray-400 bg-gray-50 text-center w-32 focus:outline-none focus:border-blue-600" autocomplete="off">'
+        return ret
+
+    processed_text = re.sub(pattern, rep_inline, text)
+    return mark_safe(processed_text)
+
+
+
+#Inline List
+@register.filter(name="inline_list")
+def inline_list(jdata):
+    data = dict(jdata)
+    lines = data['lines']
+    #a = int(data['question_ids'][0])
+    #b = int(data['question_ids'][1]) + 1
+    #question_ids = range(a, b)
+    processed_text = ""
+    pattern = r'\{\{(\d+)\}\}'
+
+    def rep_inline(match):
+        question_id = match.group(1)
+        ret  = f'<input type="text" name="question_{question_id}" placeholder={question_id} class="inline-input border-b-2 border-gray-400 bg-gray-50 text-center w-32 focus:outline-none focus:border-blue-600" autocomplete="off">'
+        return ret
+        
+    for line in lines:
+        processed_text += "- "
+        processed_text += re.sub(pattern, rep_inline, line)
+        processed_text += "<br><br>"
+
+    return mark_safe(processed_text)
+
+
 
 """
 #Radios
@@ -37,7 +84,6 @@ def radios(text, arg):
     processed = re.sub(pattern, rep_radios, text)
     return mark_safe(processed)
 """
-
 #Radios
 @register.filter(name="radios")
 def radios(jdata):

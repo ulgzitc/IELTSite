@@ -7,7 +7,9 @@
 {% for object in objects %}
     <h2>{{ object.title }}</h2>
     {% if object.qtype == "inline" %}
-        {{ object.text|inline }}
+        {{ object.jsondata|inline }}
+    {% elif object.qtype == "inline_list" %}
+        {{ object.jsondata|inline_list }}
     {% elif object.qtype == "radios" %}
         {{ object.jsondata|radios }}
     {% elif object.qtype == "inline_tab" %}
