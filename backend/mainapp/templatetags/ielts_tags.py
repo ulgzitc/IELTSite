@@ -137,7 +137,6 @@ def inline_tab(jdata):
     #a = int(data['question_ids'][0])
     #b = int(data['question_ids'][1]) + 1
     #question_ids = range(a, b)
-    pattern = r'\{\{(\d+)\}\}'
     ret = ""
 
     for l, r in zip(left, right):
