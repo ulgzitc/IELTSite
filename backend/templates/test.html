@@ -7,21 +7,23 @@
 {% for object in objects %}
     <h2>{{ object.title }}</h2>
     {% if object.qtype == "inline" %}
-        {{ object.text|inline }}
-    {% elif object.qtype == "radios" %}
-        {{ object.text|radios:forloop.counter }}
+        {{ object.data|inline }}
+    {% elif object.qtype == "inline_list" %}
+        {{ object.data|inline_list }}
     {% elif object.qtype == "inline_tab" %}
-        {{ object.text|inline_tab }}
+        {{ object.data|inline_tab }}
+    {% elif object.qtype == "radios" %}
+        {{ object.data|radios }}
     {% elif object.qtype == "checkbox" %}
-        {{ object.text|checkbox:forloop.counter }}
+        {{ object.data|checkbox:object.title }}
     {% elif object.qtype == "tabular" %}
-        {{ object.jsondata|tabular }}
+        {{ object.data|tabular }}
     {% elif object.qtype == "grid" %}
-        {{ object.jsondata|grid }}
+        {{ object.data|grid }}
     {% elif object.qtype == "assign" %}
-        {{ object.jsondata|assign }}
+        {{ object.data|assign }}
     {% elif object.qtype == "draganddrop" %}
-        {{ object.jsondata|draganddrop }}
+        {{ object.data|draganddrop }}
     {% endif %}
 {% endfor %}
 <script src="{% static 'js/checkbox.js' %}"></script>

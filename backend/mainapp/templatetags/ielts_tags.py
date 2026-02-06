@@ -5,6 +5,7 @@ import json
 
 register = template.Library()
 
+"""Old version
 #Inline
 @register.filter(name="inline")
 def inline(text):
@@ -17,8 +18,53 @@ def inline(text):
 
     processed_text = re.sub(pattern, rep_inline, text)
     return mark_safe(processed_text)
+"""
+#Inline
+@register.filter(name="inline")
+def inline(jdata):
+    data = dict(jdata)
+    text = data['text']
+    #a = int(data['question_ids'][0])
+    #b = int(data['question_ids'][1]) + 1
+    #question_ids = range(a, b)
+
+    pattern = r'\{\{(\d+)\}\}'
+
+    def rep_inline(match):
+        question_id = match.group(1)
+        ret  = f'<input type="text" name="question_{question_id}" placeholder={question_id} class="inline-input border-b-2 border-gray-400 bg-gray-50 text-center w-32 focus:outline-none focus:border-blue-600" autocomplete="off">'
+        return ret
+
+    processed_text = re.sub(pattern, rep_inline, text)
+    return mark_safe(processed_text)
 
 
+##There was no old verion.
+#Inline List
+@register.filter(name="inline_list")
+def inline_list(jdata):
+    data = dict(jdata)
+    lines = data['lines']
+    #a = int(data['question_ids'][0])
+    #b = int(data['question_ids'][1]) + 1
+    #question_ids = range(a, b)
+    processed_text = ""
+    pattern = r'\{\{(\d+)\}\}'
+
+    def rep_inline(match):
+        question_id = match.group(1)
+        ret  = f'<input type="text" name="question_{question_id}" placeholder={question_id} class="inline-input border-b-2 border-gray-400 bg-gray-50 text-center w-32 focus:outline-none focus:border-blue-600" autocomplete="off">'
+        return ret
+
+    for line in lines:
+        processed_text += "- "
+        processed_text += re.sub(pattern, rep_inline, line)
+        processed_text += "<br><br>"
+
+    return mark_safe(processed_text)
+
+
+"""Old version
 #Radios
 @register.filter(name="radios")
 def radios(text, arg):
@@ -36,8 +82,32 @@ def radios(text, arg):
     
     processed = re.sub(pattern, rep_radios, text)
     return mark_safe(processed)
+"""
+#Radios
+@register.filter(name="radios")
+def radios(jdata):
+    data = dict(jdata)
+    headers = data['headers']
+    a = int(data['question_ids'][0])
+    b = int(data['question_ids'][1]) + 1
+    question_ids = range(a, b)
+    ret = ""
 
+    for head in headers:
+        options = data[head]
+        ret += f"<h3>{head}</h3>"
 
+        for idx, option in zip(question_ids, options):
+            ret += f'''
+                <div class="form-check">
+                  <input class="form-check-input-radios" type="radio" name="{head}" id="{option}{idx}">
+                  <label class="form-check-label-radios" for="{option}{idx}">{option}</label>
+                </div>
+                '''
+    return mark_safe(ret)
+    
+
+"""Old version
 #Inline Tab
 @register.filter(name="inline_tab")
 def inline_tab(text):
@@ -57,8 +127,29 @@ def inline_tab(text):
     
     processed = re.sub(pattern, rep_inline_tab, text)
     return mark_safe(processed)
+"""
+#Inline Tab
+@register.filter(name="inline_tab")
+def inline_tab(jdata):
+    data = dict(jdata)
+    left = data['left']
+    right = data['right']
+    #a = int(data['question_ids'][0])
+    #b = int(data['question_ids'][1]) + 1
+    #question_ids = range(a, b)
+    ret = ""
+
+    for l, r in zip(left, right):
+        ret += f'<strong>{l}</strong> -'
+        if r.isdigit() == True:
+            ret += f'<input type="text" name="question_{r}" placeholder={r} class="inline-input border-b-2 border-gray-400 bg-gray-50 text-center w-32 focus:outline-none focus:border-blue-600" autocomplete="off">.<br><br>'
+        else:
+            ret += f'{r}<br><br>'
+
+    return mark_safe(ret)
 
 
+"""Old Version
 #Checkbox
 @register.filter(name="checkbox")
 def checkbox(text, arg):
@@ -76,6 +167,26 @@ def checkbox(text, arg):
     
     processed = re.sub(pattern, rep_checkbox, text)
     return mark_safe(processed)
+"""
+#Checkbox
+@register.filter(name="checkbox")
+def checkbox(jdata, arg):
+    data = dict(jdata)
+    options = data['options']
+    #a = int(data['question_ids'][0])
+    #b = int(data['question_ids'][1]) + 1
+    #question_ids = range(a, b)
+    ret = ""
+
+    for option in options:
+        ret += f'''
+            <div class="form-check">
+              <input class="form-check-input-checkbox" type="checkbox" name="{arg}" id="{option}{arg}">
+              <label class="form-check-label-checkbox" for="{option}{arg}">{option}</label>
+            </div>
+            '''
+    return mark_safe(ret)
+
 
 
 #Grid

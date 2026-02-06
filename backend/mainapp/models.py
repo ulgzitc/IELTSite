@@ -5,17 +5,17 @@ class Test(models.Model):
     CHOICE_TYPES = {
         'radios' : "Radios",
         'inline' : "Inline",
+        'inline_list' : "Inline List",
         'inline_tab' : "Inline Tab",
         'checkbox' : "Checkbox",
-        'tabular' : "Tabular (JSON)",
-        'grid' : "Grid (JSON)",
-        'assign' : "Assign (JSON)",
-        'draganddrop' : "Drag-and-Drop (JSON)",
+        'tabular' : "Tabular",
+        'grid' : "Grid",
+        'assign' : "Assign",
+        'draganddrop' : "Drag-and-Drop",
     }
 
     title = models.CharField(null=True, blank=True)
-    text = models.TextField(null=True, blank=True)
-    jsondata = models.JSONField(default=dict, null=True, blank=True)
+    data = models.JSONField(default=dict, null=True, blank=True)
     qtype = models.CharField(choices=CHOICE_TYPES)
 
 
