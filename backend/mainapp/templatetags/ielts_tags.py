@@ -100,8 +100,8 @@ def radios(jdata):
         for idx, option in zip(question_ids, options):
             ret += f'''
                 <div class="form-check">
-                  <input class="form-check-input-radios" type="radio" name="{head}" id="{option}">
-                  <label class="form-check-label-radios" for="{option}">{option}</label>
+                  <input class="form-check-input-radios" type="radio" name="{head}" id="{option}{idx}">
+                  <label class="form-check-label-radios" for="{option}{idx}">{option}</label>
                 </div>
                 '''
     return mark_safe(ret)
@@ -149,7 +149,7 @@ def inline_tab(jdata):
     return mark_safe(ret)
 
 
-
+"""Old Version
 #Checkbox
 @register.filter(name="checkbox")
 def checkbox(text, arg):
@@ -167,6 +167,26 @@ def checkbox(text, arg):
     
     processed = re.sub(pattern, rep_checkbox, text)
     return mark_safe(processed)
+"""
+#Checkbox
+@register.filter(name="checkbox")
+def checkbox(jdata, arg):
+    data = dict(jdata)
+    options = data['options']
+    #a = int(data['question_ids'][0])
+    #b = int(data['question_ids'][1]) + 1
+    #question_ids = range(a, b)
+    ret = ""
+
+    for option in options:
+        ret += f'''
+            <div class="form-check">
+              <input class="form-check-input-checkbox" type="checkbox" name="{arg}" id="{option}{arg}">
+              <label class="form-check-label-checkbox" for="{option}{arg}">{option}</label>
+            </div>
+            '''
+    return mark_safe(ret)
+
 
 
 #Grid
