@@ -9,7 +9,7 @@
     {% if object.qtype == "inline" %}
         {{ object.text|inline }}
     {% elif object.qtype == "radios" %}
-        {{ object.text|radios:forloop.counter }}
+        {{ object.jsondata|radios }}
     {% elif object.qtype == "inline_tab" %}
         {{ object.text|inline_tab }}
     {% elif object.qtype == "checkbox" %}

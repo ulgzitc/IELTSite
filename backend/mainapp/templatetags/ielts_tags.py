@@ -18,7 +18,7 @@ def inline(text):
     processed_text = re.sub(pattern, rep_inline, text)
     return mark_safe(processed_text)
 
-
+"""
 #Radios
 @register.filter(name="radios")
 def radios(text, arg):
@@ -36,6 +36,31 @@ def radios(text, arg):
     
     processed = re.sub(pattern, rep_radios, text)
     return mark_safe(processed)
+"""
+
+#Radios
+@register.filter(name="radios")
+def radios(jdata):
+    data = dict(jdata)
+    headers = data['headers']
+    a = int(data['question_ids'][0])
+    b = int(data['question_ids'][1]) + 1
+    question_ids = range(a, b)
+    ret = ""
+
+    for head in headers:
+        options = data[head]
+        ret += f"<h3>{head}</h3>"
+
+        for idx, option in zip(question_ids, options):
+            ret += f'''
+                <div class="form-check">
+                  <input class="form-check-input-radios" type="radio" name="{head}" id="{option}">
+                  <label class="form-check-label-radios" for="{option}">{option}</label>
+                </div>
+                '''
+    return mark_safe(ret)
+    
 
 
 #Inline Tab
