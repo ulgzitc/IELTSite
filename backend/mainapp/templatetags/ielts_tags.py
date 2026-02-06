@@ -5,7 +5,7 @@ import json
 
 register = template.Library()
 
-"""
+"""Old version
 #Inline
 @register.filter(name="inline")
 def inline(text):
@@ -39,7 +39,7 @@ def inline(jdata):
     return mark_safe(processed_text)
 
 
-
+##There was no old verion.
 #Inline List
 @register.filter(name="inline_list")
 def inline_list(jdata):
@@ -55,7 +55,7 @@ def inline_list(jdata):
         question_id = match.group(1)
         ret  = f'<input type="text" name="question_{question_id}" placeholder={question_id} class="inline-input border-b-2 border-gray-400 bg-gray-50 text-center w-32 focus:outline-none focus:border-blue-600" autocomplete="off">'
         return ret
-        
+
     for line in lines:
         processed_text += "- "
         processed_text += re.sub(pattern, rep_inline, line)
@@ -64,8 +64,7 @@ def inline_list(jdata):
     return mark_safe(processed_text)
 
 
-
-"""
+"""Old version
 #Radios
 @register.filter(name="radios")
 def radios(text, arg):
@@ -108,7 +107,7 @@ def radios(jdata):
     return mark_safe(ret)
     
 
-
+"""Old version
 #Inline Tab
 @register.filter(name="inline_tab")
 def inline_tab(text):
@@ -128,6 +127,28 @@ def inline_tab(text):
     
     processed = re.sub(pattern, rep_inline_tab, text)
     return mark_safe(processed)
+"""
+#Inline Tab
+@register.filter(name="inline_tab")
+def inline_tab(jdata):
+    data = dict(jdata)
+    left = data['left']
+    right = data['right']
+    #a = int(data['question_ids'][0])
+    #b = int(data['question_ids'][1]) + 1
+    #question_ids = range(a, b)
+    pattern = r'\{\{(\d+)\}\}'
+    ret = ""
+
+    for l, r in zip(left, right):
+        ret += f'<strong>{l}</strong> -'
+        if r.isdigit() == True:
+            ret += f'<input type="text" name="question_{r}" placeholder={r} class="inline-input border-b-2 border-gray-400 bg-gray-50 text-center w-32 focus:outline-none focus:border-blue-600" autocomplete="off">.<br><br>'
+        else:
+            ret += f'{r}<br><br>'
+
+    return mark_safe(ret)
+
 
 
 #Checkbox

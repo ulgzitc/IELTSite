@@ -10,10 +10,10 @@
         {{ object.jsondata|inline }}
     {% elif object.qtype == "inline_list" %}
         {{ object.jsondata|inline_list }}
+    {% elif object.qtype == "inline_tab" %}
+        {{ object.jsondata|inline_tab }}
     {% elif object.qtype == "radios" %}
         {{ object.jsondata|radios }}
-    {% elif object.qtype == "inline_tab" %}
-        {{ object.text|inline_tab }}
     {% elif object.qtype == "checkbox" %}
         {{ object.text|checkbox:forloop.counter }}
     {% elif object.qtype == "tabular" %}
