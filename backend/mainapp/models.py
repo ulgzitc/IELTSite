@@ -16,6 +16,7 @@ class Test(models.Model):
 
     title = models.CharField(null=True, blank=True)
     data = models.JSONField(default=dict, null=True, blank=True)
+    answers = models.JSONField(default=dict, null=True, blank=True)
     qtype = models.CharField(choices=CHOICE_TYPES)
 
 
