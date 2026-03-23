@@ -87,7 +87,7 @@ def inline_tab(jdata):
 
 #Checkbox
 @register.filter(name="checkbox")
-def checkbox(jdata, arg):
+def checkbox(jdata):
     data = dict(jdata)
     options = data['options']
     a = int(data['question_ids'][0])

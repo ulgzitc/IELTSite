@@ -15,7 +15,7 @@
     {% elif object.qtype == "radios" %}
         {{ object.data|radios }}
     {% elif object.qtype == "checkbox" %}
-        {{ object.data|checkbox:object.title }}
+        {{ object.data|checkbox }}
     {% elif object.qtype == "tabular" %}
         {{ object.data|tabular }}
     {% elif object.qtype == "grid" %}
