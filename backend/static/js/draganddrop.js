@@ -27,7 +27,7 @@ document.querySelectorAll('.dropzone').forEach(zone => {
         const qid = zone.closest('.trend').dataset.question;
         const input = document.createElement('input');
         input.type = 'hidden';
-        input.name = 'question_' + qid;
+        input.name = qid;
         input.value = dragged.dataset.value;
         zone.appendChild(input);
     });
